@@ -302,12 +302,18 @@
                 <span class="conn">    │   └── </span>
                 <div class="detail-wrap">
                   <p class="detail-text">
-                    A Windows background application that captures TradingView S&amp;P 500 heatmap
-                    screenshots hourly and posts them to a Discord channel via webhook. Runs silently
-                    in the system tray with options to pause, resume, or trigger a manual capture.
+                    A Windows background application that automates hourly capture of the TradingView
+                    S&amp;P 500 heatmap and delivers it to a Discord channel. Uses Playwright to
+                    launch a headless Chromium browser, navigate to TradingView, configure the heatmap
+                    view, and capture a screenshot — all without user interaction. A time-aligned
+                    scheduler fires on the hour, and the captured image is posted via Discord's
+                    incoming webhook REST API.
                     <br><br>
-                    Python · Playwright · browser automation · Discord API · webhook integration ·
-                    task scheduling · PyInstaller · Windows system tray
+                    Packaged as a standalone Windows executable with PyInstaller. Runs as a persistent
+                    system tray process with pause, resume, and manual trigger controls.
+                    <br><br>
+                    Python · Playwright · headless browser automation · Discord API ·
+                    webhook integration · task scheduling · PyInstaller · Windows system tray
                   </p>
                   <div class="detail-img"></div>
                 </div>
@@ -315,20 +321,30 @@
             </div>
           </li>
 
-          <!-- Project Beta -->
+          <!-- PDF Reconstruction Pipeline -->
           <li class="folder" id="beta-folder">
             <div class="row">
               <span class="conn">    └── </span>
-              <span class="label">Project Beta</span>
+              <span class="label">PDF Reconstruction Pipeline</span>
             </div>
             <div class="collapsible" id="beta-body">
               <div class="row" style="align-items: flex-start;">
                 <span class="conn">        └── </span>
                 <div class="detail-wrap">
                   <p class="detail-text">
-                    A lightweight local-first notes app with full-text search and markdown rendering.
-                    No accounts, no sync, no telemetry — just a single binary that stores everything
-                    in a plain SQLite file you own.
+                    A multi-stage pipeline that reconstructs scanned PDFs into clean digital documents.
+                    Preprocessing corrects page skew via projection profile analysis and Otsu thresholding,
+                    denoises with a bilateral filter to preserve edges, and binarizes for stroke analysis.
+                    Pages are classified in two passes — a fast pixel statistics pass filters obvious
+                    outliers, while a full pass combines Surya's deep learning layout model with OCR
+                    confidence metrics to label each page as normal, mixed, or outlier.
+                    <br><br>
+                    A two-phase calibration system processes the first batch of pages to establish a
+                    font size and style baseline before full reconstruction. OCR is batched across pages
+                    for GPU efficiency, with support for three engines: Surya, Tesseract, and PaddleOCR.
+                    <br><br>
+                    Python · PyMuPDF · ReportLab · OpenCV · Surya · PaddleOCR · Tesseract ·
+                    deep learning · OCR · computer vision · image processing · pipeline architecture · customtkinter
                   </p>
                   <div class="detail-img"></div>
                 </div>
