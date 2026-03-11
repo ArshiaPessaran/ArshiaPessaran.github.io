@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arshia Pessaran</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <style>
+    :root {
+      --bg:     #eef4ec;
+      --text:   #0f2010;
+      --muted:  #3d6b3c;
+      --accent: #2d5a2d;
+      --dim:    #a8c4a5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    body { padding: 56px 64px; }
+
+    /* ── Name ──────────────────────────────────────────────────── */
+    .name {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      margin-bottom: 20px;
+    }
+
+    .prompt {
+      color: var(--muted);
+      font-weight: 400;
+      margin-right: 0.45em;
+    }
+
+    /* ── Tree ──────────────────────────────────────────────────── */
+    ul.tree, ul.subtree {
+      list-style: none;
+      user-select: none;
+    }
+
+    .row {
+      display: flex;
+      align-items: baseline;
+      padding: 2px 0;
+    }
+
+    .conn {
+      color: var(--dim);
+      white-space: pre;
+      flex-shrink: 0;
+    }
+
+    .label {
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    a.label:hover, span.label:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--muted);
+    }
+
+    /* ── Folder row ────────────────────────────────────────────── */
+    .folder > .row .label {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .folder > .row .label::after {
+      content: ' ▸';
+      font-size: 0.7em;
+      color: var(--dim);
+      transition: transform 0.25s ease;
+      display: inline-block;
+      margin-left: 0.3em;
+      transform-origin: center 45%;
+    }
+
+    .folder.open > .row .label::after {
+      transform: rotate(90deg);
+    }
+
+    /* ── Collapsible containers ────────────────────────────────── */
+    .collapsible {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── About text ────────────────────────────────────────────── */
+    .about-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 420px;
+      padding: 4px 0 8px 0;
+    }
+
+    .about-text p + p {
+      margin-top: 0.9em;
+    }
+
+    /* ── Project detail ────────────────────────────────────────── */
+    .detail-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 4px 0 8px 0;
+    }
+
+    .detail-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 340px;
+    }
+
+    .detail-img {
+      width: 96px;
+      height: 64px;
+      background: var(--dim);
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    /* dim connectors when folder is closed */
+    .folder:not(.open) > .row .conn {
+      opacity: 0.4;
+    }
+
+    /* ── Resume modal ───────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(238, 244, 236, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 100;
+    }
+
+    .modal-overlay.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-scroll {
+      width: min(860px, 92vw);
+      height: 88vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    #pdf-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 0 24px;
+    }
+
+    #pdf-container canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .modal-actions {
+      position: fixed;
+      top: 24px;
+      right: 32px;
+      display: flex;
+      gap: 16px;
+    }
+
+    .modal-btn {
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .modal-btn:hover {
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="modal-overlay" id="resume-modal">
+    <div class="modal-actions">
+      <button class="modal-btn" id="modal-download">[ download ]</button>
+      <button class="modal-btn" id="modal-close">[ close ]</button>
+    </div>
+    <div class="modal-scroll">
+      <div id="pdf-container"></div>
+    </div>
+  </div>
+
+  <p class="name">
+    <span class="prompt">&gt;</span>Arshia Pessaran
+  </p>
+
+  <ul class="tree">
+
+    <!-- about -->
+    <li class="folder" id="about-folder">
+      <div class="row">
+        <span class="conn">├── </span>
+        <span class="label">about/</span>
+      </div>
+      <div class="collapsible" id="about-body">
+        <div class="row" style="align-items: flex-start;">
+          <span class="conn">│   └── </span>
+          <div class="about-text">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <!-- connect -->
+    <li class="folder" id="connect-folder">
+      <div class="row">
+        <span class="conn">├── </span>
+        <span class="label">connect/</span>
+      </div>
+      <div class="collapsible" id="connect-body">
+        <ul class="subtree">
+          <li class="row">
+            <span class="conn">│   ├── </span>
+            <a class="label" href="#">github</a>
+          </li>
+          <li class="row">
+            <span class="conn">│   ├── </span>
+            <a class="label" href="#">linkedin</a>
+          </li>
+          <li class="row">
+            <span class="conn">│   ├── </span>
+            <a class="label" href="mailto:arshia@example.com">email</a>
+          </li>
+          <li class="row">
+            <span class="conn">│   └── </span>
+            <a class="label resume-link" href="#">resume</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <!-- projects -->
+    <li class="folder" id="projects-folder">
+      <div class="row">
+        <span class="conn">└── </span>
+        <span class="label">projects/</span>
+      </div>
+      <div class="collapsible" id="projects-body">
+        <ul class="subtree">
+
+          <!-- Project Alpha -->
+          <li class="folder" id="alpha-folder">
+            <div class="row">
+              <span class="conn">    ├── </span>
+              <span class="label">Project Alpha</span>
+            </div>
+            <div class="collapsible" id="alpha-body">
+              <div class="row" style="align-items: flex-start;">
+                <span class="conn">    │   └── </span>
+                <div class="detail-wrap">
+                  <p class="detail-text">
+                    A command-line tool for visualizing code dependency graphs across large monorepos.
+                    Built with Rust for speed, it generates interactive SVG outputs and integrates
+                    directly into CI pipelines with zero configuration.
+                  </p>
+                  <div class="detail-img"></div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- Project Beta -->
+          <li class="folder" id="beta-folder">
+            <div class="row">
+              <span class="conn">    └── </span>
+              <span class="label">Project Beta</span>
+            </div>
+            <div class="collapsible" id="beta-body">
+              <div class="row" style="align-items: flex-start;">
+                <span class="conn">        └── </span>
+                <div class="detail-wrap">
+                  <p class="detail-text">
+                    A lightweight local-first notes app with full-text search and markdown rendering.
+                    No accounts, no sync, no telemetry — just a single binary that stores everything
+                    in a plain SQLite file you own.
+                  </p>
+                  <div class="detail-img"></div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </li>
+
+  </ul>
+
+  <script>
+    function openEl(el) {
+      el.style.maxHeight = el.scrollHeight + 'px';
+      el.addEventListener('transitionend', function handler() {
+        el.style.maxHeight = 'none';
+        el.removeEventListener('transitionend', handler);
+      });
+    }
+
+    function closeEl(el) {
+      el.style.maxHeight = el.scrollHeight + 'px';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        el.style.maxHeight = '0';
+      }));
+    }
+
+    function closeFolder(folderId, bodyId) {
+      const f = document.getElementById(folderId);
+      const b = document.getElementById(bodyId);
+      if (!f.classList.contains('open')) return;
+      f.classList.remove('open');
+      closeEl(b);
+      // cascade close project details if needed
+      if (folderId === 'projects-folder') {
+        ['alpha-folder', 'beta-folder'].forEach(id => document.getElementById(id).classList.remove('open'));
+        ['alpha-body',   'beta-body'  ].forEach(id => closeEl(document.getElementById(id)));
+      }
+    }
+
+    function toggleFolder(folderId, bodyId, exclusive) {
+      const folder = document.getElementById(folderId);
+      const isOpen = folder.classList.contains('open');
+
+      if (isOpen) {
+        closeFolder(folderId, bodyId);
+      } else {
+        if (exclusive) exclusive.forEach(([fid, bid]) => closeFolder(fid, bid));
+        folder.classList.add('open');
+        openEl(document.getElementById(bodyId));
+      }
+    }
+
+    // ── Resume modal ──────────────────────────────────────────────
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    const modal        = document.getElementById('resume-modal');
+    const pdfContainer = document.getElementById('pdf-container');
+    let pdfRendered    = false;
+
+    async function renderPDF() {
+      if (pdfRendered) return;
+      const pdf  = await pdfjsLib.getDocument('Resume.pdf').promise;
+      const containerWidth = pdfContainer.clientWidth || 800;
+
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page     = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: 1 });
+        const scale    = containerWidth / viewport.width;
+        const scaled   = page.getViewport({ scale });
+
+        const canvas  = document.createElement('canvas');
+        canvas.width  = scaled.width;
+        canvas.height = scaled.height;
+        pdfContainer.appendChild(canvas);
+
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport: scaled }).promise;
+      }
+      pdfRendered = true;
+    }
+
+    function openModal() {
+      modal.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+      renderPDF();
+    }
+
+    function closeModal() {
+      modal.classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.resume-link').forEach(el =>
+      el.addEventListener('click', e => { e.preventDefault(); openModal(); })
+    );
+
+    document.getElementById('modal-download').addEventListener('click', async () => {
+      const res  = await fetch('Resume.pdf');
+      const blob = await res.blob();
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = 'Arshia_Pessaran_Resume.pdf';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    const topPairs     = [['about-folder', 'about-body'], ['connect-folder', 'connect-body'], ['projects-folder', 'projects-body']];
+    const projectPairs = [['alpha-folder', 'alpha-body'], ['beta-folder',    'beta-body'   ]];
+
+    document.getElementById('about-folder').querySelector(':scope > .row')
+      .addEventListener('click', () => toggleFolder('about-folder', 'about-body', topPairs));
+
+    document.getElementById('connect-folder').querySelector(':scope > .row')
+      .addEventListener('click', () => toggleFolder('connect-folder', 'connect-body', topPairs));
+
+    document.getElementById('projects-folder').querySelector(':scope > .row')
+      .addEventListener('click', () => toggleFolder('projects-folder', 'projects-body', topPairs));
+
+    document.getElementById('alpha-folder').querySelector(':scope > .row')
+      .addEventListener('click', () => toggleFolder('alpha-folder', 'alpha-body', projectPairs));
+
+    document.getElementById('beta-folder').querySelector(':scope > .row')
+      .addEventListener('click', () => toggleFolder('beta-folder', 'beta-body', projectPairs));
+  </script>
+
+</body>
+</html>
