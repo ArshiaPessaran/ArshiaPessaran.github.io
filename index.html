@@ -142,6 +142,18 @@
       opacity: 0.4;
     }
 
+    /* ── Mobile ─────────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      body { padding: 36px 28px; }
+
+      .name { font-size: 18px; }
+
+      .detail-wrap { flex-direction: column; }
+      .detail-img  { width: 100%; height: 56px; }
+
+      .modal-scroll { height: 82vh; }
+    }
+
     /* ── Resume modal ───────────────────────────────────────────── */
     .modal-overlay {
       position: fixed;
