@@ -387,7 +387,13 @@
       }
     }
 
+    let toggling = false;
+
     function toggleFolder(folderId, bodyId, exclusive) {
+      if (toggling) return;
+      toggling = true;
+      setTimeout(() => { toggling = false; }, 400);
+
       const folder = document.getElementById(folderId);
       const isOpen = folder.classList.contains('open');
 
