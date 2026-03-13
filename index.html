@@ -324,7 +324,7 @@
           <!-- PDF Reconstruction Pipeline -->
           <li class="folder" id="beta-folder">
             <div class="row">
-              <span class="conn">    └── </span>
+              <span class="conn">    ├── </span>
               <span class="label">PDF Reconstruction Pipeline</span>
             </div>
             <div class="collapsible" id="beta-body">
@@ -345,6 +345,36 @@
                     <br><br>
                     Python · PyMuPDF · ReportLab · OpenCV · Surya · PaddleOCR · Tesseract ·
                     deep learning · OCR · computer vision · image processing · pipeline architecture · customtkinter
+                  </p>
+                  <div class="detail-img"></div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- Bludly -->
+          <li class="folder" id="gamma-folder">
+            <div class="row">
+              <span class="conn">    └── </span>
+              <span class="label">Bludly</span>
+            </div>
+            <div class="collapsible" id="gamma-body">
+              <div class="row" style="align-items: flex-start;">
+                <span class="conn">        └── </span>
+                <div class="detail-wrap">
+                  <p class="detail-text">
+                    A fullstack health data platform for uploading, tracking, and analyzing blood lab
+                    results over time. Interactive D3.js visualizations chart biomarker trends with
+                    color-coded reference ranges, date filtering, and multi-lab overlay. AI-powered
+                    analysis via a self-hosted Deepseek R1 model generates health grades, biological
+                    age estimates, and actionable insights.
+                    <br><br>
+                    Supports multiple user profiles for family management, secure time-limited doctor
+                    sharing via tokenized links, and data export. Authenticated with Google OAuth 2.0
+                    and deployed on AWS EC2.
+                    <br><br>
+                    React · Node.js · Express · PostgreSQL · D3.js · Google OAuth 2.0 ·
+                    Passport.js · REST API · Docker · AWS EC2 · Deepseek R1 · Vite · Tailwind CSS
                   </p>
                   <div class="detail-img"></div>
                 </div>
@@ -382,8 +412,8 @@
       closeEl(b);
       // cascade close project details if needed
       if (folderId === 'projects-folder') {
-        ['alpha-folder', 'beta-folder'].forEach(id => document.getElementById(id).classList.remove('open'));
-        ['alpha-body',   'beta-body'  ].forEach(id => closeEl(document.getElementById(id)));
+        ['alpha-folder', 'beta-folder', 'gamma-folder'].forEach(id => document.getElementById(id).classList.remove('open'));
+        ['alpha-body',   'beta-body',  'gamma-body' ].forEach(id => closeEl(document.getElementById(id)));
       }
     }
 
@@ -467,7 +497,7 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
     const topPairs     = [['about-folder', 'about-body'], ['connect-folder', 'connect-body'], ['projects-folder', 'projects-body']];
-    const projectPairs = [['alpha-folder', 'alpha-body'], ['beta-folder',    'beta-body'   ]];
+    const projectPairs = [['alpha-folder', 'alpha-body'], ['beta-folder', 'beta-body'], ['gamma-folder', 'gamma-body']];
 
     document.getElementById('about-folder').querySelector(':scope > .row')
       .addEventListener('click', () => toggleFolder('about-folder', 'about-body', topPairs));
@@ -483,6 +513,9 @@
 
     document.getElementById('beta-folder').querySelector(':scope > .row')
       .addEventListener('click', () => toggleFolder('beta-folder', 'beta-body', projectPairs));
+
+    document.getElementById('gamma-folder').querySelector(':scope > .row')
+      .addEventListener('click', () => toggleFolder('gamma-folder', 'gamma-body', projectPairs));
   </script>
 
 </body>
