@@ -248,8 +248,8 @@
 
     .star-twinkle { animation: twinkle 3s ease-in-out infinite; }
 
-    .petal  { animation: petal-drift 12s ease-in-out infinite; }
-    .petal2 { animation: petal-drift2 15s ease-in-out infinite; }
+    .petal  { animation: petal-drift 20s ease-in-out infinite; }
+    .petal2 { animation: petal-drift2 25s ease-in-out infinite; }
 
     .sign-flicker  { animation: flicker 4s infinite; }
     .sign-flicker2 { animation: flicker2 6s infinite 1s; }
@@ -354,19 +354,16 @@
       </mask>
     </defs>
     <!-- Moon ambient glow -->
-    <circle cx="920" cy="120" r="80" fill="#c8c4b0" opacity="0.03" />
-    <circle cx="920" cy="120" r="55" fill="#d8d4c0" opacity="0.05" />
+    <circle cx="920" cy="120" r="80" fill="#d4c480" opacity="0.04" />
+    <circle cx="920" cy="120" r="55" fill="#e0d090" opacity="0.06" />
     <!-- Moon body -->
-    <circle cx="920" cy="120" r="40" fill="#e8e4d4" opacity="0.06" filter="url(#moon-glow)" />
-    <circle cx="920" cy="120" r="32" fill="#e8e4d4" opacity="0.15" mask="url(#moon-mask)" filter="url(#moon-glow)" />
+    <circle cx="920" cy="120" r="40" fill="#f0e8a0" opacity="0.07" filter="url(#moon-glow)" />
+    <circle cx="920" cy="120" r="32" fill="#f5ecc0" opacity="0.18" mask="url(#moon-mask)" filter="url(#moon-glow)" />
 
     <!-- Cherry blossom petals -->
     <ellipse class="petal" cx="780" cy="60" rx="3" ry="1.5" fill="#ff8fa8" opacity="0" style="animation-delay: 0s;" />
-    <ellipse class="petal2" cx="850" cy="40" rx="2.5" ry="1.2" fill="#ffb0c4" opacity="0" style="animation-delay: 4s;" />
-    <ellipse class="petal" cx="950" cy="80" rx="2.8" ry="1.3" fill="#ff8fa8" opacity="0" style="animation-delay: 8s;" />
-    <ellipse class="petal2" cx="700" cy="50" rx="2.5" ry="1.2" fill="#ffb0c4" opacity="0" style="animation-delay: 2s;" />
-    <ellipse class="petal" cx="1050" cy="45" rx="3" ry="1.5" fill="#ff8fa8" opacity="0" style="animation-delay: 11s;" />
-    <ellipse class="petal2" cx="820" cy="95" rx="2.2" ry="1.1" fill="#ffb0c4" opacity="0" style="animation-delay: 6s;" />
+    <ellipse class="petal2" cx="850" cy="40" rx="2.5" ry="1.2" fill="#ffb0c4" opacity="0" style="animation-delay: 10s;" />
+    <ellipse class="petal" cx="950" cy="80" rx="2.8" ry="1.3" fill="#ff8fa8" opacity="0" style="animation-delay: 18s;" />
 
     <!-- Stars -->
     <circle cx="680" cy="45" r="1.2" fill="#e0dfe6" opacity="0.4" class="star-twinkle" style="animation-delay: 0s;" />
@@ -571,7 +568,7 @@
     </g>
 
     <!-- Street lamp center -->
-    <g class="lamp-sway">
+    <g>
       <line x1="620" y1="390" x2="620" y2="510" stroke="#3a4258" stroke-width="3" />
       <line x1="620" y1="390" x2="640" y2="385" stroke="#3a4258" stroke-width="2" />
       <circle cx="640" cy="385" r="5" fill="#ffcf48" opacity="0.7" filter="url(#lamp-glow)" />
@@ -579,7 +576,7 @@
     </g>
 
     <!-- Street lamp right-center -->
-    <g class="lamp-sway" style="animation-delay: 2.5s;">
+    <g>
       <line x1="780" y1="395" x2="780" y2="510" stroke="#3a4258" stroke-width="3" />
       <line x1="780" y1="395" x2="800" y2="390" stroke="#3a4258" stroke-width="2" />
       <circle cx="800" cy="390" r="5" fill="#ffcf48" opacity="0.6" filter="url(#lamp-glow)" />
@@ -587,7 +584,7 @@
     </g>
 
     <!-- Street lamp far right -->
-    <g class="lamp-sway" style="animation-delay: 1.6s;">
+    <g>
       <line x1="1100" y1="400" x2="1100" y2="510" stroke="#3a4258" stroke-width="3" />
       <line x1="1100" y1="400" x2="1120" y2="395" stroke="#3a4258" stroke-width="2" />
       <circle cx="1120" cy="395" r="5" fill="#ffcf48" opacity="0.55" filter="url(#lamp-glow)" />
