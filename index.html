@@ -227,6 +227,23 @@
       75%      { transform: rotate(-0.5deg); }
     }
 
+    @keyframes petal-drift {
+      0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.6; }
+      80%  { opacity: 0.5; }
+      100% { transform: translate(-80px, 180px) rotate(260deg); opacity: 0; }
+    }
+
+    @keyframes petal-drift2 {
+      0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.5; }
+      80%  { opacity: 0.4; }
+      100% { transform: translate(-60px, 200px) rotate(320deg); opacity: 0; }
+    }
+
+    .petal  { animation: petal-drift 8s ease-in-out infinite; }
+    .petal2 { animation: petal-drift2 10s ease-in-out infinite; }
+
     .sign-flicker  { animation: flicker 4s infinite; }
     .sign-flicker2 { animation: flicker2 6s infinite 1s; }
     .window-pulse  { animation: glow-pulse 3s ease-in-out infinite; }
@@ -336,7 +353,31 @@
     <circle cx="920" cy="120" r="40" fill="#e8e4d4" opacity="0.06" filter="url(#moon-glow)" />
     <circle cx="920" cy="120" r="32" fill="#e8e4d4" opacity="0.15" mask="url(#moon-mask)" filter="url(#moon-glow)" />
 
-    <!-- Scale everything 80% vertically, anchored to bottom (y=550) -->
+    <!-- Cherry blossom petals -->
+    <ellipse class="petal" cx="780" cy="60" rx="3" ry="1.5" fill="#ff8fa8" opacity="0" style="animation-delay: 0s;" />
+    <ellipse class="petal2" cx="850" cy="40" rx="2.5" ry="1.2" fill="#ffb0c4" opacity="0" style="animation-delay: 2s;" />
+    <ellipse class="petal" cx="950" cy="80" rx="2.8" ry="1.3" fill="#ff8fa8" opacity="0" style="animation-delay: 4s;" />
+    <ellipse class="petal2" cx="700" cy="50" rx="2.5" ry="1.2" fill="#ffb0c4" opacity="0" style="animation-delay: 1s;" />
+    <ellipse class="petal" cx="1050" cy="45" rx="3" ry="1.5" fill="#ff8fa8" opacity="0" style="animation-delay: 6s;" />
+    <ellipse class="petal2" cx="820" cy="95" rx="2.2" ry="1.1" fill="#ffb0c4" opacity="0" style="animation-delay: 3s;" />
+    <ellipse class="petal" cx="1100" cy="70" rx="2.5" ry="1.2" fill="#ff8fa8" opacity="0" style="animation-delay: 5s;" />
+    <ellipse class="petal2" cx="750" cy="100" rx="2.8" ry="1.3" fill="#ffb0c4" opacity="0" style="animation-delay: 7s;" />
+
+    <!-- Stars -->
+    <circle cx="680" cy="45" r="1.2" fill="#e0dfe6" opacity="0.4" />
+    <circle cx="750" cy="85" r="0.8" fill="#e0dfe6" opacity="0.25" />
+    <circle cx="830" cy="30" r="1.0" fill="#e0dfe6" opacity="0.35" />
+    <circle cx="1000" cy="55" r="1.3" fill="#e0dfe6" opacity="0.3" />
+    <circle cx="1080" cy="25" r="0.9" fill="#e0dfe6" opacity="0.4" />
+    <circle cx="1150" cy="70" r="1.1" fill="#e0dfe6" opacity="0.25" />
+    <circle cx="620" cy="90" r="0.7" fill="#e0dfe6" opacity="0.3" />
+    <circle cx="770" cy="15" r="1.0" fill="#e0dfe6" opacity="0.35" />
+    <circle cx="1050" cy="90" r="0.8" fill="#e0dfe6" opacity="0.2" />
+    <circle cx="870" cy="65" r="1.1" fill="#e0dfe6" opacity="0.3" />
+    <circle cx="960" cy="20" r="0.9" fill="#e0dfe6" opacity="0.4" />
+    <circle cx="700" cy="110" r="0.7" fill="#e0dfe6" opacity="0.2" />
+
+    <!-- Scale everything 75% vertically, anchored to bottom (y=550) -->
     <g transform="translate(0, 137.5) scale(1, 0.75)">
     <defs>
       <filter id="neon-glow">
@@ -372,6 +413,44 @@
     <rect x="975" y="160" width="85"  height="360" fill="#253046" />
     <rect x="1070" y="100" width="75" height="420" fill="#1e273a" />
     <rect x="1155" y="190" width="50" height="330" fill="#212a40" />
+
+    <!-- Rooftop antennas -->
+    <line x1="735" y1="120" x2="735" y2="88" stroke="#3a4258" stroke-width="1.5" />
+    <line x1="730" y1="95" x2="740" y2="90" stroke="#3a4258" stroke-width="1" />
+    <line x1="740" y1="95" x2="730" y2="90" stroke="#3a4258" stroke-width="1" />
+
+    <line x1="920" y1="80" x2="920" y2="50" stroke="#3a4258" stroke-width="1.5" />
+    <line x1="915" y1="58" x2="925" y2="53" stroke="#3a4258" stroke-width="1" />
+    <line x1="925" y1="62" x2="915" y2="57" stroke="#3a4258" stroke-width="1" />
+    <!-- blinking red light on antenna -->
+    <circle cx="920" cy="50" r="2" fill="#ff2d7b" opacity="0.7" class="window-pulse" />
+
+    <line x1="1095" y1="100" x2="1095" y2="72" stroke="#3a4258" stroke-width="1.5" />
+    <line x1="1090" y1="78" x2="1100" y2="73" stroke="#3a4258" stroke-width="1" />
+
+    <!-- Rooftop water tank -->
+    <rect x="800" y="190" width="20" height="10" rx="1" fill="#2a3348" />
+    <rect x="805" y="185" width="10" height="5" rx="0.5" fill="#2a3348" />
+
+    <!-- AC units on building walls -->
+    <rect x="618" y="260" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
+    <rect x="618" y="310" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
+    <rect x="868" y="220" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
+    <rect x="868" y="290" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
+    <rect x="1048" y="180" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
+
+    <!-- Cat silhouette on rooftop -->
+    <g transform="translate(660, 172)">
+      <!-- body -->
+      <ellipse cx="8" cy="6" rx="6" ry="4" fill="#1a2030" />
+      <!-- head -->
+      <circle cx="14" cy="2" r="3.5" fill="#1a2030" />
+      <!-- ears -->
+      <polygon points="12,-2 11,2 13,1" fill="#1a2030" />
+      <polygon points="16,-2 15,1 17,2" fill="#1a2030" />
+      <!-- tail -->
+      <path d="M 2 6 Q -4 0 -2 -3" fill="none" stroke="#1a2030" stroke-width="2" stroke-linecap="round" />
+    </g>
 
     <!-- Windows on buildings -->
     <g class="window-pulse" style="animation-delay: 0.5s;">
@@ -435,6 +514,28 @@
     <g filter="url(#sign-glow)">
       <rect x="890" y="155" width="55" height="22" rx="2" fill="none" stroke="#00e5ff" stroke-width="1.5" />
       <text x="917" y="170" text-anchor="middle" fill="#00e5ff" font-size="12" font-family="sans-serif">居酒屋</text>
+    </g>
+
+    <!-- Paper lanterns outside izakaya -->
+    <g class="lamp-sway" style="animation-delay: 0.5s;">
+      <line x1="893" y1="178" x2="893" y2="188" stroke="#3a4258" stroke-width="0.8" />
+      <ellipse cx="893" cy="192" rx="4" ry="5" fill="#ff2d7b" opacity="0.5" />
+      <ellipse cx="893" cy="192" rx="4" ry="5" fill="none" stroke="#ff2d7b" stroke-width="0.5" opacity="0.8" />
+    </g>
+    <g class="lamp-sway" style="animation-delay: 0.8s;">
+      <line x1="907" y1="178" x2="907" y2="188" stroke="#3a4258" stroke-width="0.8" />
+      <ellipse cx="907" cy="192" rx="4" ry="5" fill="#ff2d7b" opacity="0.45" />
+      <ellipse cx="907" cy="192" rx="4" ry="5" fill="none" stroke="#ff2d7b" stroke-width="0.5" opacity="0.8" />
+    </g>
+    <g class="lamp-sway" style="animation-delay: 1.1s;">
+      <line x1="921" y1="178" x2="921" y2="188" stroke="#3a4258" stroke-width="0.8" />
+      <ellipse cx="921" cy="192" rx="4" ry="5" fill="#ff2d7b" opacity="0.5" />
+      <ellipse cx="921" cy="192" rx="4" ry="5" fill="none" stroke="#ff2d7b" stroke-width="0.5" opacity="0.8" />
+    </g>
+    <g class="lamp-sway" style="animation-delay: 1.4s;">
+      <line x1="935" y1="178" x2="935" y2="188" stroke="#3a4258" stroke-width="0.8" />
+      <ellipse cx="935" cy="192" rx="4" ry="5" fill="#ff2d7b" opacity="0.45" />
+      <ellipse cx="935" cy="192" rx="4" ry="5" fill="none" stroke="#ff2d7b" stroke-width="0.5" opacity="0.8" />
     </g>
 
     <!-- Neon sign 3: カラオケ (karaoke) — flicker2 -->
