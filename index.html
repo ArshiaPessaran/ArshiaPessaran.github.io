@@ -241,8 +241,15 @@
       100% { transform: translate(-60px, 200px) rotate(320deg); opacity: 0; }
     }
 
-    .petal  { animation: petal-drift 8s ease-in-out infinite; }
-    .petal2 { animation: petal-drift2 10s ease-in-out infinite; }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; }
+      50%      { opacity: 0.6; }
+    }
+
+    .star-twinkle { animation: twinkle 3s ease-in-out infinite; }
+
+    .petal  { animation: petal-drift 12s ease-in-out infinite; }
+    .petal2 { animation: petal-drift2 15s ease-in-out infinite; }
 
     .sign-flicker  { animation: flicker 4s infinite; }
     .sign-flicker2 { animation: flicker2 6s infinite 1s; }
@@ -355,25 +362,23 @@
 
     <!-- Cherry blossom petals -->
     <ellipse class="petal" cx="780" cy="60" rx="3" ry="1.5" fill="#ff8fa8" opacity="0" style="animation-delay: 0s;" />
-    <ellipse class="petal2" cx="850" cy="40" rx="2.5" ry="1.2" fill="#ffb0c4" opacity="0" style="animation-delay: 2s;" />
-    <ellipse class="petal" cx="950" cy="80" rx="2.8" ry="1.3" fill="#ff8fa8" opacity="0" style="animation-delay: 4s;" />
-    <ellipse class="petal2" cx="700" cy="50" rx="2.5" ry="1.2" fill="#ffb0c4" opacity="0" style="animation-delay: 1s;" />
-    <ellipse class="petal" cx="1050" cy="45" rx="3" ry="1.5" fill="#ff8fa8" opacity="0" style="animation-delay: 6s;" />
-    <ellipse class="petal2" cx="820" cy="95" rx="2.2" ry="1.1" fill="#ffb0c4" opacity="0" style="animation-delay: 3s;" />
-    <ellipse class="petal" cx="1100" cy="70" rx="2.5" ry="1.2" fill="#ff8fa8" opacity="0" style="animation-delay: 5s;" />
-    <ellipse class="petal2" cx="750" cy="100" rx="2.8" ry="1.3" fill="#ffb0c4" opacity="0" style="animation-delay: 7s;" />
+    <ellipse class="petal2" cx="850" cy="40" rx="2.5" ry="1.2" fill="#ffb0c4" opacity="0" style="animation-delay: 4s;" />
+    <ellipse class="petal" cx="950" cy="80" rx="2.8" ry="1.3" fill="#ff8fa8" opacity="0" style="animation-delay: 8s;" />
+    <ellipse class="petal2" cx="700" cy="50" rx="2.5" ry="1.2" fill="#ffb0c4" opacity="0" style="animation-delay: 2s;" />
+    <ellipse class="petal" cx="1050" cy="45" rx="3" ry="1.5" fill="#ff8fa8" opacity="0" style="animation-delay: 11s;" />
+    <ellipse class="petal2" cx="820" cy="95" rx="2.2" ry="1.1" fill="#ffb0c4" opacity="0" style="animation-delay: 6s;" />
 
     <!-- Stars -->
-    <circle cx="680" cy="45" r="1.2" fill="#e0dfe6" opacity="0.4" />
+    <circle cx="680" cy="45" r="1.2" fill="#e0dfe6" opacity="0.4" class="star-twinkle" style="animation-delay: 0s;" />
     <circle cx="750" cy="85" r="0.8" fill="#e0dfe6" opacity="0.25" />
-    <circle cx="830" cy="30" r="1.0" fill="#e0dfe6" opacity="0.35" />
+    <circle cx="830" cy="30" r="1.0" fill="#e0dfe6" opacity="0.35" class="star-twinkle" style="animation-delay: 1.5s;" />
     <circle cx="1000" cy="55" r="1.3" fill="#e0dfe6" opacity="0.3" />
-    <circle cx="1080" cy="25" r="0.9" fill="#e0dfe6" opacity="0.4" />
+    <circle cx="1080" cy="25" r="0.9" fill="#e0dfe6" opacity="0.4" class="star-twinkle" style="animation-delay: 2.8s;" />
     <circle cx="1150" cy="70" r="1.1" fill="#e0dfe6" opacity="0.25" />
     <circle cx="620" cy="90" r="0.7" fill="#e0dfe6" opacity="0.3" />
-    <circle cx="770" cy="15" r="1.0" fill="#e0dfe6" opacity="0.35" />
+    <circle cx="770" cy="15" r="1.0" fill="#e0dfe6" opacity="0.35" class="star-twinkle" style="animation-delay: 4.2s;" />
     <circle cx="1050" cy="90" r="0.8" fill="#e0dfe6" opacity="0.2" />
-    <circle cx="870" cy="65" r="1.1" fill="#e0dfe6" opacity="0.3" />
+    <circle cx="870" cy="65" r="1.1" fill="#e0dfe6" opacity="0.3" class="star-twinkle" style="animation-delay: 1s;" />
     <circle cx="960" cy="20" r="0.9" fill="#e0dfe6" opacity="0.4" />
     <circle cx="700" cy="110" r="0.7" fill="#e0dfe6" opacity="0.2" />
 
@@ -440,16 +445,16 @@
     <rect x="1048" y="180" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
 
     <!-- Cat silhouette on rooftop -->
-    <g transform="translate(660, 172)">
+    <g transform="translate(565, 232)">
       <!-- body -->
-      <ellipse cx="8" cy="6" rx="6" ry="4" fill="#1a2030" />
+      <ellipse cx="8" cy="6" rx="6" ry="4" fill="#3a4560" />
       <!-- head -->
-      <circle cx="14" cy="2" r="3.5" fill="#1a2030" />
+      <circle cx="14" cy="2" r="3.5" fill="#3a4560" />
       <!-- ears -->
-      <polygon points="12,-2 11,2 13,1" fill="#1a2030" />
-      <polygon points="16,-2 15,1 17,2" fill="#1a2030" />
+      <polygon points="12,-2 11,2 13,1" fill="#3a4560" />
+      <polygon points="16,-2 15,1 17,2" fill="#3a4560" />
       <!-- tail -->
-      <path d="M 2 6 Q -4 0 -2 -3" fill="none" stroke="#1a2030" stroke-width="2" stroke-linecap="round" />
+      <path d="M 2 6 Q -4 0 -2 -3" fill="none" stroke="#3a4560" stroke-width="2" stroke-linecap="round" />
     </g>
 
     <!-- Windows on buildings -->
