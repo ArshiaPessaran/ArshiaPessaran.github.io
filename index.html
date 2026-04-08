@@ -251,6 +251,16 @@
     .petal  { animation: petal-drift 20s ease-in-out infinite; }
     .petal2 { animation: petal-drift2 25s ease-in-out infinite; }
 
+    @keyframes tail-flick {
+      0%, 70%, 100% { d: path("M 2 6 Q -4 0 -2 -3"); }
+      75%           { d: path("M 2 6 Q -5 2 -6 -1"); }
+      80%           { d: path("M 2 6 Q 0 -2 4 -3"); }
+      85%           { d: path("M 2 6 Q -3 1 -4 -2"); }
+      90%           { d: path("M 2 6 Q -4 0 -2 -3"); }
+    }
+
+    .cat-tail { animation: tail-flick 8s ease-in-out infinite; }
+
     .sign-flicker  { animation: flicker 4s infinite; }
     .sign-flicker2 { animation: flicker2 6s infinite 1s; }
     .window-pulse  { animation: glow-pulse 3s ease-in-out infinite; }
@@ -451,7 +461,7 @@
       <polygon points="12,-2 11,2 13,1" fill="#3a4560" />
       <polygon points="16,-2 15,1 17,2" fill="#3a4560" />
       <!-- tail -->
-      <path d="M 2 6 Q -4 0 -2 -3" fill="none" stroke="#3a4560" stroke-width="2" stroke-linecap="round" />
+      <path class="cat-tail" d="M 2 6 Q -4 0 -2 -3" fill="none" stroke="#3a4560" stroke-width="2" stroke-linecap="round" />
     </g>
 
     <!-- Windows on buildings -->
