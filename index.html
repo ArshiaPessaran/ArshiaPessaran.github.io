@@ -322,13 +322,44 @@
             </div>
           </li>
 
-          <!-- PDF Reconstruction Pipeline -->
+          <!-- Nautiq -->
           <li class="folder" id="beta-folder">
+            <div class="row">
+              <span class="conn">    ├── </span>
+              <span class="label">Nautiq</span>
+            </div>
+            <div class="collapsible" id="beta-body">
+              <div class="row" style="align-items: flex-start;">
+                <span class="conn">    │   └── </span>
+                <div class="detail-wrap">
+                  <p class="detail-text">
+                    A native iOS dive log app built for the Deep6 Excursion dive computer. Connects
+                    via Bluetooth Low Energy to download dive data, parse binary protocols, and present
+                    a rich logbook with depth/temperature profile graphs, statistics, and dive site
+                    management. Implements the full TI CC2652R1 communication protocol including
+                    packet framing, checksum validation, and two firmware parser variants (V0/V1).
+                    <br><br>
+                    Features over-the-air firmware updates via the TI OAD protocol — a capability no
+                    existing app has delivered for this hardware. Firmware is served remotely from
+                    GitHub Releases with SHA-256 integrity verification and local caching for offline
+                    use. Fingerprint-based deduplication ensures syncs are idempotent and non-destructive.
+                    <br><br>
+                    Swift 6 · SwiftUI · SwiftData · CoreBluetooth · Swift Charts ·
+                    MapKit · CloudKit · StoreKit 2 · CryptoKit · BLE protocol engineering · binary parsing
+                  </p>
+                  <div class="detail-img"></div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- PDF Reconstruction Pipeline -->
+          <li class="folder" id="gamma-folder">
             <div class="row">
               <span class="conn">    ├── </span>
               <span class="label">PDF Reconstruction Pipeline</span>
             </div>
-            <div class="collapsible" id="beta-body">
+            <div class="collapsible" id="gamma-body">
               <div class="row" style="align-items: flex-start;">
                 <span class="conn">    │   └── </span>
                 <div class="detail-wrap">
@@ -354,12 +385,12 @@
           </li>
 
           <!-- TradingView Heatmap Bot -->
-          <li class="folder" id="gamma-folder">
+          <li class="folder" id="delta-folder">
             <div class="row">
               <span class="conn">    └── </span>
               <span class="label">TradingView Heatmap Bot</span>
             </div>
-            <div class="collapsible" id="gamma-body">
+            <div class="collapsible" id="delta-body">
               <div class="row" style="align-items: flex-start;">
                 <span class="conn">        └── </span>
                 <div class="detail-wrap">
@@ -413,8 +444,8 @@
       closeEl(b);
       // cascade close project details if needed
       if (folderId === 'projects-folder') {
-        ['alpha-folder', 'beta-folder', 'gamma-folder'].forEach(id => document.getElementById(id).classList.remove('open'));
-        ['alpha-body',   'beta-body',  'gamma-body' ].forEach(id => closeEl(document.getElementById(id)));
+        ['alpha-folder', 'beta-folder', 'gamma-folder', 'delta-folder'].forEach(id => document.getElementById(id).classList.remove('open'));
+        ['alpha-body',   'beta-body',  'gamma-body',  'delta-body' ].forEach(id => closeEl(document.getElementById(id)));
       }
     }
 
@@ -498,7 +529,7 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
     const topPairs     = [['about-folder', 'about-body'], ['connect-folder', 'connect-body'], ['projects-folder', 'projects-body']];
-    const projectPairs = [['alpha-folder', 'alpha-body'], ['beta-folder', 'beta-body'], ['gamma-folder', 'gamma-body']];
+    const projectPairs = [['alpha-folder', 'alpha-body'], ['beta-folder', 'beta-body'], ['gamma-folder', 'gamma-body'], ['delta-folder', 'delta-body']];
 
     document.getElementById('about-folder').querySelector(':scope > .row')
       .addEventListener('click', () => toggleFolder('about-folder', 'about-body', topPairs));
@@ -517,6 +548,9 @@
 
     document.getElementById('gamma-folder').querySelector(':scope > .row')
       .addEventListener('click', () => toggleFolder('gamma-folder', 'gamma-body', projectPairs));
+
+    document.getElementById('delta-folder').querySelector(':scope > .row')
+      .addEventListener('click', () => toggleFolder('delta-folder', 'delta-body', projectPairs));
   </script>
 
 </body>
