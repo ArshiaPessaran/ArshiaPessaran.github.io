@@ -712,12 +712,12 @@
     <ul class="tree">
 
       <!-- about -->
-      <li class="folder" id="about-folder">
+      <li class="folder" data-group="top">
         <div class="row">
           <span class="conn">├── </span>
           <span class="label">about/</span>
         </div>
-        <div class="collapsible" id="about-body">
+        <div class="collapsible">
           <div class="row" style="align-items: flex-start;">
             <span class="conn">│   └── </span>
             <div class="about-text">
@@ -728,12 +728,12 @@
       </li>
 
       <!-- connect -->
-      <li class="folder" id="connect-folder">
+      <li class="folder" data-group="top">
         <div class="row">
           <span class="conn">├── </span>
           <span class="label">connect/</span>
         </div>
-        <div class="collapsible" id="connect-body">
+        <div class="collapsible">
           <ul class="subtree">
             <li class="row">
               <span class="conn">│   ├── </span>
@@ -756,21 +756,21 @@
       </li>
 
       <!-- projects -->
-      <li class="folder" id="projects-folder">
+      <li class="folder" data-group="top" data-parent>
         <div class="row">
           <span class="conn">└── </span>
           <span class="label">projects/</span>
         </div>
-        <div class="collapsible" id="projects-body">
+        <div class="collapsible">
           <ul class="subtree">
 
             <!-- Bludly -->
-            <li class="folder" id="alpha-folder">
+            <li class="folder" data-group="project">
               <div class="row">
                 <span class="conn">    ├── </span>
                 <span class="label">Bludly</span>
               </div>
-              <div class="collapsible" id="alpha-body">
+              <div class="collapsible">
                 <div class="row" style="align-items: flex-start;">
                   <span class="conn">    │   └── </span>
                   <div class="detail-wrap">
@@ -798,12 +798,12 @@
             <!-- Nautiq (temporarily removed — to be re-added later) -->
 
             <!-- PDF Reconstruction Pipeline -->
-            <li class="folder" id="gamma-folder">
+            <li class="folder" data-group="project">
               <div class="row">
                 <span class="conn">    ├── </span>
                 <span class="label">PDF Reconstruction Pipeline</span>
               </div>
-              <div class="collapsible" id="gamma-body">
+              <div class="collapsible">
                 <div class="row" style="align-items: flex-start;">
                   <span class="conn">    │   └── </span>
                   <div class="detail-wrap">
@@ -829,12 +829,12 @@
             </li>
 
             <!-- TradingView Heatmap Bot -->
-            <li class="folder" id="delta-folder">
+            <li class="folder" data-group="project">
               <div class="row">
                 <span class="conn">    └── </span>
                 <span class="label">TradingView Heatmap Bot</span>
               </div>
-              <div class="collapsible" id="delta-body">
+              <div class="collapsible">
                 <div class="row" style="align-items: flex-start;">
                   <span class="conn">        └── </span>
                   <div class="detail-wrap">
@@ -881,34 +881,34 @@
       }));
     }
 
-    function closeFolder(folderId, bodyId) {
-      const f = document.getElementById(folderId);
-      const b = document.getElementById(bodyId);
-      if (!f.classList.contains('open')) return;
-      f.classList.remove('open');
-      closeEl(b);
-      if (folderId === 'projects-folder') {
-        ['alpha-folder', 'gamma-folder', 'delta-folder'].forEach(id => document.getElementById(id).classList.remove('open'));
-        ['alpha-body',   'gamma-body',  'delta-body' ].forEach(id => closeEl(document.getElementById(id)));
+    function closeFolderEl(folder) {
+      if (!folder.classList.contains('open')) return;
+      folder.classList.remove('open');
+      closeEl(folder.querySelector(':scope > .collapsible'));
+      if (folder.hasAttribute('data-parent')) {
+        folder.querySelectorAll('.folder.open').forEach(child => {
+          child.classList.remove('open');
+          closeEl(child.querySelector(':scope > .collapsible'));
+        });
       }
     }
 
     let toggling = false;
 
-    function toggleFolder(folderId, bodyId, exclusive) {
+    function toggleFolder(folder) {
       if (toggling) return;
       toggling = true;
       setTimeout(() => { toggling = false; }, 400);
 
-      const folder = document.getElementById(folderId);
+      const group = folder.dataset.group;
       const isOpen = folder.classList.contains('open');
 
       if (isOpen) {
-        closeFolder(folderId, bodyId);
+        closeFolderEl(folder);
       } else {
-        if (exclusive) exclusive.forEach(([fid, bid]) => closeFolder(fid, bid));
+        document.querySelectorAll(`.folder[data-group="${group}"]`).forEach(f => closeFolderEl(f));
         folder.classList.add('open');
-        openEl(document.getElementById(bodyId));
+        openEl(folder.querySelector(':scope > .collapsible'));
       }
     }
 
@@ -977,26 +977,10 @@
     modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    const topPairs     = [['about-folder', 'about-body'], ['connect-folder', 'connect-body'], ['projects-folder', 'projects-body']];
-    const projectPairs = [['alpha-folder', 'alpha-body'], ['gamma-folder', 'gamma-body'], ['delta-folder', 'delta-body']];
-
-    document.getElementById('about-folder').querySelector(':scope > .row')
-      .addEventListener('click', () => toggleFolder('about-folder', 'about-body', topPairs));
-
-    document.getElementById('connect-folder').querySelector(':scope > .row')
-      .addEventListener('click', () => toggleFolder('connect-folder', 'connect-body', topPairs));
-
-    document.getElementById('projects-folder').querySelector(':scope > .row')
-      .addEventListener('click', () => toggleFolder('projects-folder', 'projects-body', topPairs));
-
-    document.getElementById('alpha-folder').querySelector(':scope > .row')
-      .addEventListener('click', () => toggleFolder('alpha-folder', 'alpha-body', projectPairs));
-
-    document.getElementById('gamma-folder').querySelector(':scope > .row')
-      .addEventListener('click', () => toggleFolder('gamma-folder', 'gamma-body', projectPairs));
-
-    document.getElementById('delta-folder').querySelector(':scope > .row')
-      .addEventListener('click', () => toggleFolder('delta-folder', 'delta-body', projectPairs));
+    document.querySelectorAll('.folder[data-group]').forEach(folder => {
+      folder.querySelector(':scope > .row')
+        .addEventListener('click', () => toggleFolder(folder));
+    });
   </script>
 
 </body>
