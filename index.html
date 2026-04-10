@@ -992,6 +992,23 @@
       folder.querySelector(':scope > .row')
         .addEventListener('click', () => toggleFolder(folder));
     });
+
+    // Randomize animation durations ±1s each cycle
+    const animatedSelectors = [
+      { sel: '.cat-tail',      base: 16 },
+      { sel: '.sign-flicker',  base: 4  },
+      { sel: '.sign-flicker2', base: 6  },
+      { sel: '.star-twinkle',  base: 3  },
+      { sel: '.petal',         base: 20 },
+      { sel: '.petal2',        base: 25 },
+    ];
+    animatedSelectors.forEach(({ sel, base }) => {
+      document.querySelectorAll(sel).forEach(el => {
+        el.addEventListener('animationiteration', () => {
+          el.style.animationDuration = (base + (Math.random() * 2 - 1)).toFixed(2) + 's';
+        });
+      });
+    });
   </script>
 
 </body>
