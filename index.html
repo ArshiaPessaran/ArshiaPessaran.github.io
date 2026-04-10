@@ -888,8 +888,8 @@
       f.classList.remove('open');
       closeEl(b);
       if (folderId === 'projects-folder') {
-        ['alpha-folder', 'beta-folder', 'gamma-folder', 'delta-folder'].forEach(id => document.getElementById(id).classList.remove('open'));
-        ['alpha-body',   'beta-body',  'gamma-body',  'delta-body' ].forEach(id => closeEl(document.getElementById(id)));
+        ['alpha-folder', 'gamma-folder', 'delta-folder'].forEach(id => document.getElementById(id).classList.remove('open'));
+        ['alpha-body',   'gamma-body',  'delta-body' ].forEach(id => closeEl(document.getElementById(id)));
       }
     }
 
@@ -978,7 +978,7 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
     const topPairs     = [['about-folder', 'about-body'], ['connect-folder', 'connect-body'], ['projects-folder', 'projects-body']];
-    const projectPairs = [['alpha-folder', 'alpha-body'], ['beta-folder', 'beta-body'], ['gamma-folder', 'gamma-body'], ['delta-folder', 'delta-body']];
+    const projectPairs = [['alpha-folder', 'alpha-body'], ['gamma-folder', 'gamma-body'], ['delta-folder', 'delta-body']];
 
     document.getElementById('about-folder').querySelector(':scope > .row')
       .addEventListener('click', () => toggleFolder('about-folder', 'about-body', topPairs));
@@ -991,9 +991,6 @@
 
     document.getElementById('alpha-folder').querySelector(':scope > .row')
       .addEventListener('click', () => toggleFolder('alpha-folder', 'alpha-body', projectPairs));
-
-    document.getElementById('beta-folder').querySelector(':scope > .row')
-      .addEventListener('click', () => toggleFolder('beta-folder', 'beta-body', projectPairs));
 
     document.getElementById('gamma-folder').querySelector(':scope > .row')
       .addEventListener('click', () => toggleFolder('gamma-folder', 'gamma-body', projectPairs));
