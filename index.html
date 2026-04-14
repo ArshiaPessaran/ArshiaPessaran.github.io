@@ -807,7 +807,45 @@
               </div>
             </li>
 
-            <!-- Nautiq (temporarily removed — to be re-added later) -->
+            <!-- Nautiq -->
+            <li class="folder" data-group="project">
+              <div class="row">
+                <span class="conn">    ├── </span>
+                <span class="label">Nautiq</span>
+              </div>
+              <div class="collapsible">
+                <div class="row" style="align-items: flex-start;">
+                  <span class="conn">    │   └── </span>
+                  <div class="detail-wrap">
+                    <p class="detail-text">
+                      The officially endorsed iOS companion app for the Deep6 Excursion dive computer,
+                      built as a direct replacement for the 1-star-rated competitor at Deep6's invitation.
+                      Reverse-engineered the BLE protocol by studying libdivecomputer C sources, sniffing
+                      a separate app's Android traffic, and mapping the full GATT service table on physical
+                      hardware using nRF Connect and LightBlue. Discovered undocumented behavior — the
+                      device uses a single bidirectional characteristic (FFE1) rather than separate TX/RX
+                      channels, and advertises short 16-bit UUIDs that don't match the 128-bit service UUID,
+                      requiring name-based scan filtering.
+                      <br><br>
+                      Implements the full TI CC2652R1 communication protocol with two firmware parser
+                      variants (V0 legacy and V1 modern), packet framing with additive-sum checksums,
+                      and fingerprint-based deduplication. Features over-the-air firmware updates — a
+                      capability no existing app has delivered for this hardware. Firmware binaries are
+                      served from GitHub Releases with SHA-256 integrity verification and offline caching.
+                      <br><br>
+                      Extracted competitor firmware binaries from Android APK assets to enable cross-version
+                      testing. Freemium model with StoreKit 2 in-app purchase. Verified against 77 dives
+                      downloaded from a physical D01-5C device.
+                      <br><br>
+                      Swift 6 · SwiftUI · SwiftData · CoreBluetooth · Swift Charts ·
+                      MapKit · CloudKit · StoreKit 2 · CryptoKit · BLE protocol engineering ·
+                      binary parsing
+                    </p>
+                    <div class="detail-img"></div>
+                  </div>
+                </div>
+              </div>
+            </li>
 
             <!-- PDF Reconstruction Pipeline -->
             <li class="folder" data-group="project">
