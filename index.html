@@ -818,10 +818,12 @@
                   <span class="conn">    │   └── </span>
                   <div class="detail-wrap">
                     <p class="detail-text">
-                      The officially endorsed iOS companion app for the Deep6 Excursion dive computer,
-                      built as a direct replacement for the 1-star-rated competitor at Deep6's invitation.
-                      Reverse-engineered the BLE protocol by studying libdivecomputer C sources, sniffing
-                      a separate app's Android traffic, and mapping the full GATT service table on physical
+                      The officially endorsed iOS and Android companion app for the Deep6 Excursion dive
+                      computer, built as a replacement for the 1-star-rated competitor. Shipped to TestFlight
+                      and pitched to the manufacturer, securing official endorsement as their companion app
+                      with full branding and firmware collaboration rights. Reverse-engineered the BLE
+                      protocol by studying libdivecomputer C sources, sniffing a separate app's Android
+                      traffic via HCI snoop logs, and mapping the full GATT service table on physical
                       hardware using nRF Connect and LightBlue. Discovered undocumented behavior — the
                       device uses a single bidirectional characteristic (FFE1) rather than separate TX/RX
                       channels, and advertises short 16-bit UUIDs that don't match the 128-bit service UUID,
@@ -829,17 +831,19 @@
                       <br><br>
                       Implements the full TI CC2652R1 communication protocol with two firmware parser
                       variants (V0 legacy and V1 modern), packet framing with additive-sum checksums,
-                      and fingerprint-based deduplication. Features over-the-air firmware updates — a
-                      capability no existing app has delivered for this hardware. Firmware binaries are
-                      served from GitHub Releases with SHA-256 integrity verification and offline caching.
+                      and fingerprint-based deduplication. Features over-the-air firmware updates via an
+                      undocumented FFE2 channel activated by a magic trigger sequence — a capability no
+                      existing app has delivered for this hardware on iOS. Firmware binaries are served
+                      from GitHub Releases with SHA-256 integrity verification and offline caching.
                       <br><br>
                       Extracted competitor firmware binaries from Android APK assets to enable cross-version
-                      testing. Freemium model with StoreKit 2 in-app purchase. Verified against 77 dives
-                      downloaded from a physical D01-5C device.
+                      testing. Freemium model with StoreKit 2 and Google Play Billing in-app purchase.
+                      Verified against 77 dives downloaded from a physical D01-5C device. Zero third-party
+                      dependencies on both platforms.
                       <br><br>
-                      Swift 6 · SwiftUI · SwiftData · CoreBluetooth · Swift Charts ·
-                      MapKit · CloudKit · StoreKit 2 · CryptoKit · BLE protocol engineering ·
-                      binary parsing
+                      Swift 6 · SwiftUI · SwiftData · Kotlin · Jetpack Compose · Room ·
+                      CoreBluetooth · Android BLE · Swift Charts · MapKit · CloudKit ·
+                      StoreKit 2 · CryptoKit · BLE protocol reverse engineering · binary parsing
                     </p>
                     <div class="detail-img"></div>
                   </div>
