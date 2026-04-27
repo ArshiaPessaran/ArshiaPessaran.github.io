@@ -7,32 +7,31 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%230e1220'/><mask id='m'><circle cx='16' cy='16' r='10' fill='white'/><circle cx='22' cy='12' r='8' fill='black'/></mask><circle cx='16' cy='16' r='10' fill='%23f5e080' mask='url(%23m)'/><circle cx='16' cy='16' r='13' fill='%23f5e080' opacity='0.15'/></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=block" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Vazirmatn:wght@300;400&display=block" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
     :root {
-      --bg:      #0b0e1a;
-      --text:    #e0dfe6;
-      --neon1:   #00e5ff;
-      --neon2:   #ff2d7b;
-      --neon3:   #b967ff;
-      --neon4:   #39ff8e;
-      --neon5:   #ffab40;
-      --muted:   #7a8ba8;
-      --dim:     #7888a8;
-      --glow1:   rgba(0, 229, 255, 0.35);
-      --glow2:   rgba(255, 45, 123, 0.35);
-      --glow3:   rgba(185, 103, 255, 0.35);
-      --glow4:   rgba(57, 255, 142, 0.35);
-      --glow5:   rgba(255, 171, 64, 0.35);
+      --bg:      #0e1530;
+      --text:    #efe6cc;
+      --neon1:   #d8a83a;   /* gold */
+      --neon2:   #e85a7a;   /* rose */
+      --neon3:   #3ad8d2;   /* turquoise (firuze) */
+      --neon4:   #c8b074;   /* muted gold */
+      --neon5:   #6a4ad8;   /* persian blue */
+      --muted:   #a89878;
+      --dim:     #786850;
+      --glow1:   rgba(216, 168, 58, 0.45);
+      --glow2:   rgba(232, 90, 122, 0.4);
+      --glow3:   rgba(58, 216, 210, 0.4);
+      --glow4:   rgba(200, 176, 116, 0.35);
+      --glow5:   rgba(106, 74, 216, 0.35);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { background: #0e1220; }
+    html { background: #0a1230; }
     html, body {
       height: 100%;
-
       color: var(--text);
       font-family: 'IBM Plex Mono', 'Courier New', monospace;
       font-size: 15px;
@@ -46,7 +45,14 @@
       content: '';
       position: fixed;
       inset: 0;
-      background: linear-gradient(135deg, #1e2a48 0%, #141a30 50%, #0e1220 100%);
+      background: linear-gradient(135deg,
+        #1c1e54 0%,
+        #2c2c5e 28%,
+        #4a4878 48%,
+        #8a8aa0 65%,
+        #b8c4d4 78%,
+        #d0dce4 88%,
+        #f0eed0 100%);
       z-index: -1;
     }
 
@@ -55,7 +61,7 @@
       font-size: 22px;
       font-weight: 600;
       letter-spacing: 0.01em;
-      margin-bottom: 20px;
+      margin-bottom: 4px;
       color: #fff;
       text-shadow: 0 0 8px var(--glow1), 0 0 20px var(--glow1);
     }
@@ -96,22 +102,41 @@
       text-decoration-color: var(--muted);
     }
 
-    /* ── Text color ─────────────────────────────────────────────── */
     .tree .label,
     .subtree .label {
-      color: #b0d4e8;
+      color: #f4e2b8;
       text-shadow: none;
     }
 
     .about-text,
     .detail-text {
-      color: #90b8d0;
+      color: #d8c498;
+    }
+
+    /* ── Persian subname ────────────────────────────────────────── */
+    .name-fa {
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: #c89a6a;
+      margin-bottom: 22px;
+      margin-left: 18px;
+      direction: rtl;
+    }
+
+    .pn {
+      font-family: 'Vazirmatn', sans-serif;
+      color: var(--neon1);
+      font-size: 13px;
+      margin-right: 8px;
+      font-weight: 400;
+      direction: ltr;
+      display: inline-block;
     }
 
     /* ── Folder row ────────────────────────────────────────────── */
-    .folder > .row .label {
-      font-weight: 500;
-    }
+    .folder > .row .label { font-weight: 500; }
 
     .folder > .row .label::after {
       content: ' ▸';
@@ -123,18 +148,14 @@
       transform-origin: center 45%;
     }
 
-    .folder.open > .row .label::after {
-      transform: rotate(90deg);
-    }
+    .folder.open > .row .label::after { transform: rotate(90deg); }
 
-    /* ── Collapsible containers ────────────────────────────────── */
     .collapsible {
       overflow: hidden;
       max-height: 0;
       transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* ── About text ────────────────────────────────────────────── */
     .about-text {
       font-size: 13px;
       line-height: 1.75;
@@ -142,11 +163,8 @@
       padding: 4px 0 8px 0;
     }
 
-    .about-text p + p {
-      margin-top: 0.9em;
-    }
+    .about-text p + p { margin-top: 0.9em; }
 
-    /* ── Project detail ────────────────────────────────────────── */
     .detail-wrap {
       display: flex;
       align-items: flex-start;
@@ -168,12 +186,9 @@
       flex-shrink: 0;
     }
 
-    /* dim connectors when folder is closed */
-    .folder:not(.open) > .row .conn {
-      opacity: 0.4;
-    }
+    .folder:not(.open) > .row .conn { opacity: 0.4; }
 
-    /* ── Tokyo cityscape ───────────────────────────────────────── */
+    /* ── Persian garden cityscape ──────────────────────────────── */
     .cityscape {
       position: fixed;
       bottom: 0;
@@ -190,36 +205,32 @@
       z-index: 1;
     }
 
-    /* neon sign flicker */
     @keyframes flicker {
       0%, 100% { opacity: 1; }
-      4%       { opacity: 0.2; }
+      4%       { opacity: 0.3; }
       6%       { opacity: 1; }
       42%      { opacity: 1; }
-      44%      { opacity: 0.15; }
-      46%      { opacity: 0.9; }
-      47%      { opacity: 0.2; }
-      49%      { opacity: 1; }
+      44%      { opacity: 0.2; }
+      46%      { opacity: 0.95; }
       80%      { opacity: 1; }
-      82%      { opacity: 0.4; }
+      82%      { opacity: 0.5; }
       83%      { opacity: 1; }
     }
 
     @keyframes flicker2 {
       0%, 100% { opacity: 0.9; }
       20%      { opacity: 0.9; }
-      21%      { opacity: 0.3; }
+      21%      { opacity: 0.4; }
       22%      { opacity: 0.85; }
       60%      { opacity: 0.85; }
-      61%      { opacity: 0.1; }
+      61%      { opacity: 0.2; }
       62%      { opacity: 0.7; }
-      63%      { opacity: 0.1; }
       64%      { opacity: 0.9; }
     }
 
     @keyframes glow-pulse {
-      0%, 100% { opacity: 0.5; }
-      50%      { opacity: 0.8; }
+      0%, 100% { opacity: 0.4; }
+      50%      { opacity: 0.7; }
     }
 
     @keyframes lampSway {
@@ -227,6 +238,25 @@
       25%      { transform: rotate(0.5deg); }
       75%      { transform: rotate(-0.5deg); }
     }
+
+    @keyframes cypress-sway {
+      0%, 100% { transform: rotate(-0.6deg); }
+      50%      { transform: rotate(0.6deg); }
+    }
+    .cypress-1, .cypress-2, .cypress-3 {
+      transform-box: fill-box;
+      transform-origin: 50% 100%;
+    }
+    .cypress-1 { animation: cypress-sway 9s ease-in-out infinite; }
+    .cypress-2 { animation: cypress-sway 11s ease-in-out infinite; animation-delay: 1s; }
+    .cypress-3 { animation: cypress-sway 13s ease-in-out infinite; animation-delay: 2s; }
+
+    @keyframes water-shimmer {
+      0%, 100% { opacity: 0.45; transform: translateX(0); }
+      50%      { opacity: 0.7; transform: translateX(2px); }
+    }
+    .water-shimmer  { animation: water-shimmer 6s ease-in-out infinite; }
+    .water-shimmer2 { animation: water-shimmer 8s ease-in-out infinite; animation-delay: 2s; }
 
     @keyframes petal-drift {
       0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
@@ -248,7 +278,6 @@
     }
 
     .star-twinkle { animation: twinkle 3s ease-in-out infinite; }
-
     .petal  { animation: petal-drift 20s ease-in-out infinite; }
     .petal2 { animation: petal-drift2 25s ease-in-out infinite; }
 
@@ -263,12 +292,26 @@
     .moon-glow1 { animation: moon-breathe 6s ease-in-out infinite; }
     .moon-glow2 { animation: moon-breathe2 6s ease-in-out infinite; }
 
+    @keyframes steam-rise {
+      0%   { transform: translateY(0) scale(1);   opacity: 0; }
+      30%  { opacity: 0.5; }
+      100% { transform: translateY(-22px) scale(1.6); opacity: 0; }
+    }
+    .steam  { animation: steam-rise 4s ease-out infinite; transform-origin: center bottom; }
+    .steam2 { animation: steam-rise 5s ease-out infinite; animation-delay: 1.4s; transform-origin: center bottom; }
+    .steam3 { animation: steam-rise 4.5s ease-out infinite; animation-delay: 2.7s; transform-origin: center bottom; }
+
+    @keyframes shamseh-pulse {
+      0%, 100% { opacity: 0.06; }
+      50%      { opacity: 0.16; }
+    }
+    .shamseh-halo { animation: shamseh-pulse 12s ease-in-out infinite; }
+
     @keyframes tail-flick {
       0%, 46%  { d: path("M 2 6 Q -4 0 -2 -3"); }
       50%, 96% { d: path("M 2 6 Q 0 -2 4 -3"); }
       100%     { d: path("M 2 6 Q -4 0 -2 -3"); }
     }
-
     .cat-tail { animation: tail-flick 16s ease-in-out infinite; }
 
     .sign-flicker  { animation: flicker 4s infinite; }
@@ -276,21 +319,20 @@
     .window-pulse  { animation: glow-pulse 3s ease-in-out infinite; }
     .lamp-sway     { animation: lampSway 5s ease-in-out infinite; transform-origin: top center; }
 
-    /* ── Mobile ─────────────────────────────────────────────────── */
     @media (max-width: 600px) {
       body { padding: 36px 28px; }
       .name { font-size: 18px; }
+      .name-fa { font-size: 12px; }
       .detail-wrap { flex-direction: column; }
       .detail-img  { width: 100%; height: 56px; }
       .modal-scroll { height: 82vh; }
-      .cityscape { width: 100vw; opacity: 0.45; }
+      .cityscape { width: 100vw; opacity: 0.55; }
     }
 
-    /* ── Resume modal ───────────────────────────────────────────── */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(11, 14, 26, 0.65);
+      background: rgba(14, 21, 48, 0.78);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -341,7 +383,7 @@
     .modal-btn {
       font-family: inherit;
       font-size: 13px;
-      color: #d0e8f5;
+      color: #f0d8a8;
       background: none;
       border: none;
       cursor: pointer;
@@ -350,16 +392,13 @@
       text-decoration: none;
     }
 
-    .modal-btn:hover {
-      color: var(--text);
-    }
+    .modal-btn:hover { color: var(--text); }
   </style>
 </head>
 <body>
 
-  <!-- Tokyo cityscape background -->
+  <!-- Persian chahar-bagh at twilight -->
   <svg class="cityscape" viewBox="0 0 1200 550" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
-    <!-- Moon -->
     <defs>
       <filter id="moon-glow">
         <feGaussianBlur stdDeviation="12" result="blur" />
@@ -372,43 +411,6 @@
         <circle cx="970" cy="120" r="32" fill="white" />
         <circle cx="990" cy="108" r="28" fill="black" />
       </mask>
-    </defs>
-    <!-- Moon ambient glow -->
-    <circle class="moon-glow1" cx="970" cy="120" r="80" fill="#d4b850" opacity="0.04" />
-    <circle class="moon-glow2" cx="970" cy="120" r="55" fill="#e0c860" opacity="0.06" />
-    <!-- Moon body -->
-    <circle cx="970" cy="120" r="40" fill="#f0d870" opacity="0.07" filter="url(#moon-glow)" />
-    <circle cx="970" cy="120" r="32" fill="#f5e080" opacity="0.20" mask="url(#moon-mask)" filter="url(#moon-glow)" />
-
-    <!-- Cherry blossom petals -->
-    <ellipse class="petal" cx="780" cy="60" rx="3" ry="1.5" fill="#ff8fa8" opacity="0" style="animation-delay: 0s;" />
-    <ellipse class="petal2" cx="850" cy="40" rx="2.5" ry="1.2" fill="#ffb0c4" opacity="0" style="animation-delay: 10s;" />
-    <ellipse class="petal" cx="950" cy="80" rx="2.8" ry="1.3" fill="#ff8fa8" opacity="0" style="animation-delay: 18s;" />
-
-    <!-- Stars -->
-    <circle cx="680" cy="45" r="1.2" fill="#e0dfe6" opacity="0.4" class="star-twinkle" style="animation-delay: 0s;" />
-    <circle cx="750" cy="85" r="0.8" fill="#e0dfe6" opacity="0.25" />
-    <circle cx="830" cy="30" r="1.0" fill="#e0dfe6" opacity="0.35" class="star-twinkle" style="animation-delay: 1.5s;" />
-    <circle cx="1000" cy="55" r="1.3" fill="#e0dfe6" opacity="0.3" />
-    <circle cx="1080" cy="25" r="0.9" fill="#e0dfe6" opacity="0.4" class="star-twinkle" style="animation-delay: 2.8s;" />
-    <circle cx="1150" cy="70" r="1.1" fill="#e0dfe6" opacity="0.25" />
-    <circle cx="620" cy="90" r="0.7" fill="#e0dfe6" opacity="0.3" />
-    <circle cx="770" cy="15" r="1.0" fill="#e0dfe6" opacity="0.35" class="star-twinkle" style="animation-delay: 4.2s;" />
-    <circle cx="1050" cy="90" r="0.8" fill="#e0dfe6" opacity="0.2" />
-    <circle cx="870" cy="65" r="1.1" fill="#e0dfe6" opacity="0.3" class="star-twinkle" style="animation-delay: 1s;" />
-    <circle cx="960" cy="20" r="0.9" fill="#e0dfe6" opacity="0.4" />
-    <circle cx="700" cy="110" r="0.7" fill="#e0dfe6" opacity="0.2" />
-
-    <!-- Scale everything 75% vertically, anchored to bottom (y=550) -->
-    <g transform="translate(0, 137.5) scale(1, 0.75)">
-    <defs>
-      <filter id="neon-glow">
-        <feGaussianBlur stdDeviation="4" result="blur" />
-        <feMerge>
-          <feMergeNode in="blur" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
       <filter id="sign-glow">
         <feGaussianBlur stdDeviation="6" result="blur" />
         <feMerge>
@@ -424,285 +426,409 @@
           <feMergeNode in="SourceGraphic" />
         </feMerge>
       </filter>
-    </defs>
-
-    <!-- Buildings — right half only (start ~600) -->
-    <rect x="560" y="240" width="60"  height="280" fill="#1c2436" />
-    <rect x="630" y="180" width="80"  height="340" fill="#253044" />
-    <rect x="720" y="120" width="70"  height="400" fill="#1f283c" />
-    <rect x="800" y="200" width="90"  height="320" fill="#232c42" />
-    <rect x="900" y="80"  width="65"  height="440" fill="#1b2234" />
-    <rect x="975" y="160" width="85"  height="360" fill="#253046" />
-    <rect x="1070" y="100" width="75" height="420" fill="#1e273a" />
-    <rect x="1155" y="190" width="50" height="330" fill="#212a40" />
-
-    <!-- Rooftop antennas -->
-    <line x1="735" y1="120" x2="735" y2="88" stroke="#3a4258" stroke-width="1.5" />
-    <line x1="730" y1="95" x2="740" y2="90" stroke="#3a4258" stroke-width="1" />
-    <line x1="740" y1="95" x2="730" y2="90" stroke="#3a4258" stroke-width="1" />
-
-    <line x1="920" y1="80" x2="920" y2="50" stroke="#3a4258" stroke-width="1.5" />
-    <line x1="915" y1="58" x2="925" y2="53" stroke="#3a4258" stroke-width="1" />
-    <line x1="925" y1="62" x2="915" y2="57" stroke="#3a4258" stroke-width="1" />
-    <!-- blinking red light on antenna -->
-    <circle cx="920" cy="50" r="2" fill="#ff2d7b" opacity="0.7" class="window-pulse" />
-
-    <line x1="1095" y1="100" x2="1095" y2="72" stroke="#3a4258" stroke-width="1.5" />
-    <line x1="1090" y1="78" x2="1100" y2="73" stroke="#3a4258" stroke-width="1" />
-
-    <!-- Rooftop water tank -->
-    <rect x="800" y="190" width="20" height="10" rx="1" fill="#2a3348" />
-    <rect x="805" y="185" width="10" height="5" rx="0.5" fill="#2a3348" />
-
-    <!-- AC units on building walls -->
-    <rect x="618" y="260" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
-    <rect x="618" y="310" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
-    <rect x="868" y="220" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
-    <rect x="868" y="290" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
-    <rect x="1048" y="180" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
-
-    <!-- Cat silhouette on rooftop -->
-    <g transform="translate(565, 232)">
-      <!-- body -->
-      <ellipse cx="8" cy="6" rx="6" ry="4" fill="#3a4560" />
-      <!-- head -->
-      <circle cx="14" cy="2" r="3.5" fill="#3a4560" />
-      <!-- ears -->
-      <polygon points="12,-2 11,2 13,1" fill="#3a4560" />
-      <polygon points="16,-2 15,1 17,2" fill="#3a4560" />
-      <!-- tail -->
-      <path class="cat-tail" d="M 2 6 Q -4 0 -2 -3" fill="none" stroke="#3a4560" stroke-width="2" stroke-linecap="round" />
-    </g>
-
-    <!-- Windows on buildings -->
-    <g class="window-pulse" style="animation-delay: 0.5s;">
-      <rect x="650" y="200" width="4" height="4" fill="#ffcf48" opacity="0.7" />
-      <rect x="685" y="200" width="4" height="4" fill="#253040" />
-      <rect x="650" y="220" width="4" height="4" fill="#253040" />
-      <rect x="685" y="240" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="650" y="280" width="4" height="4" fill="#ffcf48" opacity="0.6" />
-      <rect x="685" y="300" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-      <rect x="575" y="260" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="575" y="300" width="4" height="4" fill="#253040" />
-      <rect x="595" y="280" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-    </g>
-    <g class="window-pulse" style="animation-delay: 1.5s;">
-      <rect x="740" y="140" width="4" height="4" fill="#ffcf48" opacity="0.6" />
-      <rect x="760" y="140" width="4" height="4" fill="#253040" />
-      <rect x="740" y="180" width="4" height="4" fill="#253040" />
-      <rect x="760" y="180" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="740" y="220" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-      <rect x="760" y="260" width="4" height="4" fill="#ffcf48" opacity="0.6" />
-      <rect x="820" y="220" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="860" y="220" width="4" height="4" fill="#253040" />
-      <rect x="820" y="260" width="4" height="4" fill="#253040" />
-      <rect x="860" y="280" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-    </g>
-    <g>
-      <rect x="920" y="100" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="940" y="100" width="4" height="4" fill="#253040" />
-      <rect x="920" y="140" width="4" height="4" fill="#ffcf48" opacity="0.6" />
-      <rect x="940" y="160" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-      <rect x="920" y="200" width="4" height="4" fill="#253040" />
-      <rect x="940" y="220" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="995" y="180" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-      <rect x="1030" y="180" width="4" height="4" fill="#253040" />
-      <rect x="995" y="220" width="4" height="4" fill="#ffcf48" opacity="0.6" />
-      <rect x="1030" y="240" width="4" height="4" fill="#ffcf48" opacity="0.3" />
-      <rect x="1085" y="120" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="1110" y="140" width="4" height="4" fill="#253040" />
-      <rect x="1085" y="180" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-      <rect x="1110" y="200" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="1170" y="210" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-      <rect x="1170" y="250" width="4" height="4" fill="#253040" />
-      <rect x="1170" y="290" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-    </g>
-
-    <!-- Power lines (high) -->
-    <path d="M 540 220 Q 700 205 880 215 Q 1000 225 1200 210"
-          fill="none" stroke="#2a3348" stroke-width="1" />
-    <path d="M 540 225 Q 700 210 880 220 Q 1000 230 1200 215"
-          fill="none" stroke="#2a3348" stroke-width="0.8" />
-
-    <!-- SIGNS -->
-
-    <!-- Neon sign 1: ラーメン (ramen) — flickering -->
-    <g class="sign-flicker" filter="url(#sign-glow)">
-      <rect x="534" y="182" width="62" height="26" rx="2" fill="none" stroke="#ff2d7b" stroke-width="1.5" />
-      <text x="565" y="201" text-anchor="middle" fill="#ff2d7b" font-size="15" font-family="sans-serif">ラーメン</text>
-    </g>
-
-    <!-- Neon sign 2: 居酒屋 (izakaya) — steady glow -->
-    <g filter="url(#sign-glow)">
-      <rect x="890" y="155" width="55" height="22" rx="2" fill="none" stroke="#00e5ff" stroke-width="1.5" />
-      <text x="917" y="170" text-anchor="middle" fill="#00e5ff" font-size="12" font-family="sans-serif">居酒屋</text>
-    </g>
-
-    <!-- Paper lanterns outside izakaya -->
-    <g class="lamp-sway" style="animation-delay: 0.5s;">
-      <line x1="893" y1="178" x2="893" y2="188" stroke="#3a4258" stroke-width="0.8" />
-      <ellipse cx="893" cy="192" rx="4" ry="5" fill="#ff2d7b" opacity="0.5" />
-      <ellipse cx="893" cy="192" rx="4" ry="5" fill="none" stroke="#ff2d7b" stroke-width="0.5" opacity="0.8" />
-    </g>
-    <g class="lamp-sway" style="animation-delay: 0.8s;">
-      <line x1="907" y1="178" x2="907" y2="188" stroke="#3a4258" stroke-width="0.8" />
-      <ellipse cx="907" cy="192" rx="4" ry="5" fill="#ff2d7b" opacity="0.45" />
-      <ellipse cx="907" cy="192" rx="4" ry="5" fill="none" stroke="#ff2d7b" stroke-width="0.5" opacity="0.8" />
-    </g>
-    <g class="lamp-sway" style="animation-delay: 1.1s;">
-      <line x1="921" y1="178" x2="921" y2="188" stroke="#3a4258" stroke-width="0.8" />
-      <ellipse cx="921" cy="192" rx="4" ry="5" fill="#ff2d7b" opacity="0.5" />
-      <ellipse cx="921" cy="192" rx="4" ry="5" fill="none" stroke="#ff2d7b" stroke-width="0.5" opacity="0.8" />
-    </g>
-    <g class="lamp-sway" style="animation-delay: 1.4s;">
-      <line x1="935" y1="178" x2="935" y2="188" stroke="#3a4258" stroke-width="0.8" />
-      <ellipse cx="935" cy="192" rx="4" ry="5" fill="#ff2d7b" opacity="0.45" />
-      <ellipse cx="935" cy="192" rx="4" ry="5" fill="none" stroke="#ff2d7b" stroke-width="0.5" opacity="0.8" />
-    </g>
-
-    <!-- Neon sign 3: カラオケ (karaoke) — flicker2 -->
-    <g class="sign-flicker2" filter="url(#sign-glow)">
-      <rect x="972" y="246" width="66" height="24" rx="2" fill="none" stroke="#b967ff" stroke-width="1.5" />
-      <text x="1005" y="263" text-anchor="middle" fill="#b967ff" font-size="14" font-family="sans-serif">カラオケ</text>
-    </g>
-
-    <!-- Vertical neon sign: ホテル on tall building -->
-    <g filter="url(#neon-glow)">
-      <text x="938" y="240" fill="#ff2d7b" font-size="10" font-family="sans-serif" writing-mode="tb">ホテル</text>
-    </g>
-
-    <!-- Neon sign: 24h convenience store -->
-    <g filter="url(#neon-glow)">
-      <text x="830" y="260" text-anchor="middle" fill="#00e5ff" font-size="13" font-family="'IBM Plex Mono', monospace" font-weight="600">24h</text>
-    </g>
-
-    <!-- Vertical neon: 喫茶 (coffee shop) -->
-    <g class="sign-flicker2" style="animation-delay: 3s;" filter="url(#neon-glow)">
-      <text x="660" y="260" fill="#ffab40" font-size="11" font-family="sans-serif" writing-mode="tb">喫茶</text>
-    </g>
-
-    <!-- Neon sign: 寿司 (sushi) -->
-    <g class="sign-flicker" style="animation-delay: 1.5s;" filter="url(#sign-glow)">
-      <rect x="1155" y="250" width="42" height="20" rx="2" fill="none" stroke="#39ff8e" stroke-width="1.5" />
-      <text x="1176" y="264" text-anchor="middle" fill="#39ff8e" font-size="11" font-family="sans-serif">寿司</text>
-    </g>
-
-    <!-- Street lamp center -->
-    <g>
-      <line x1="620" y1="390" x2="620" y2="510" stroke="#3a4258" stroke-width="3" />
-      <line x1="620" y1="390" x2="640" y2="385" stroke="#3a4258" stroke-width="2" />
-      <circle cx="640" cy="385" r="5" fill="#ffcf48" opacity="0.7" filter="url(#lamp-glow)" />
-      <circle cx="640" cy="385" r="14" fill="#ffcf48" opacity="0.08" />
-    </g>
-
-    <!-- Street lamp right-center -->
-    <g>
-      <line x1="780" y1="395" x2="780" y2="510" stroke="#3a4258" stroke-width="3" />
-      <line x1="780" y1="395" x2="800" y2="390" stroke="#3a4258" stroke-width="2" />
-      <circle cx="800" cy="390" r="5" fill="#ffcf48" opacity="0.6" filter="url(#lamp-glow)" />
-      <circle cx="800" cy="390" r="14" fill="#ffcf48" opacity="0.06" />
-    </g>
-
-    <!-- Street lamp far right -->
-    <g>
-      <line x1="1100" y1="400" x2="1100" y2="510" stroke="#3a4258" stroke-width="3" />
-      <line x1="1100" y1="400" x2="1120" y2="395" stroke="#3a4258" stroke-width="2" />
-      <circle cx="1120" cy="395" r="5" fill="#ffcf48" opacity="0.55" filter="url(#lamp-glow)" />
-      <circle cx="1120" cy="395" r="14" fill="#ffcf48" opacity="0.06" />
-    </g>
-
-    <!-- Bicycle leaning against building -->
-    <g transform="translate(730, 480)">
-      <!-- back wheel -->
-      <circle cx="0" cy="20" r="10" fill="none" stroke="#3a4258" stroke-width="1.5" />
-      <!-- front wheel -->
-      <circle cx="22" cy="20" r="10" fill="none" stroke="#3a4258" stroke-width="1.5" />
-      <!-- frame -->
-      <line x1="0" y1="20" x2="8" y2="8" stroke="#3a4258" stroke-width="1.5" />
-      <line x1="8" y1="8" x2="22" y2="20" stroke="#3a4258" stroke-width="1.5" />
-      <line x1="8" y1="8" x2="18" y2="6" stroke="#3a4258" stroke-width="1.5" />
-      <line x1="18" y1="6" x2="22" y2="20" stroke="#3a4258" stroke-width="1.2" />
-      <!-- handlebars -->
-      <line x1="18" y1="6" x2="16" y2="2" stroke="#3a4258" stroke-width="1.2" />
-      <line x1="14" y1="3" x2="19" y2="1" stroke="#3a4258" stroke-width="1.2" />
-      <!-- seat -->
-      <line x1="8" y1="8" x2="8" y2="4" stroke="#3a4258" stroke-width="1.2" />
-      <line x1="5" y1="4" x2="11" y2="4" stroke="#3a4258" stroke-width="1.5" stroke-linecap="round" />
-      <!-- kickstand -->
-      <line x1="10" y1="16" x2="14" y2="30" stroke="#3a4258" stroke-width="1" />
-    </g>
-
-    <!-- Sidewalk -->
-    <rect x="0" y="505" width="1200" height="8" fill="#1e2538" />
-
-    <!-- Street surface -->
-    <rect x="0" y="513" width="1200" height="37" fill="#181e2e" />
-
-    <!-- Road markings -->
-    <line x1="0" y1="532" x2="1200" y2="532" stroke="#354060" stroke-width="1.2" stroke-dasharray="20,15" />
-
-    <!-- Crosswalk stripes -->
-    <g opacity="0.6">
-      <rect x="820" y="516" width="28" height="3" fill="#455272" />
-      <rect x="820" y="522" width="28" height="3" fill="#455272" />
-      <rect x="820" y="528" width="28" height="3" fill="#455272" />
-      <rect x="820" y="534" width="28" height="3" fill="#455272" />
-      <rect x="820" y="540" width="28" height="3" fill="#455272" />
-    </g>
-
-    <!-- Sidewalk edge -->
-    <line x1="0" y1="513" x2="1200" y2="513" stroke="#2a3348" stroke-width="2" />
-
-    <!-- Vending machine -->
-    <rect x="950" y="478" width="18" height="27" rx="1" fill="#1e2538" stroke="#354060" stroke-width="1" />
-    <rect x="953" y="481" width="5" height="6" rx="0.5" fill="#b967ff" opacity="0.7" />
-    <rect x="960" y="481" width="5" height="6" rx="0.5" fill="#ffab40" opacity="0.6" />
-    <rect x="953" y="490" width="5" height="6" rx="0.5" fill="#00e5ff" opacity="0.6" />
-    <rect x="960" y="490" width="5" height="6" rx="0.5" fill="#39ff8e" opacity="0.7" />
-    <rect x="953" y="499" width="12" height="3" rx="0.5" fill="#121622" />
-    <ellipse cx="959" cy="506" rx="12" ry="3" fill="#b967ff" opacity="0.04" />
-
-    <!-- Neon sign: 薬 (pharmacy) -->
-    <g class="sign-flicker" style="animation-delay: 2s;" filter="url(#sign-glow)">
-      <text x="1008" y="218" text-anchor="middle" fill="#39ff8e" font-size="16" font-family="sans-serif">薬</text>
-    </g>
-
-    <!-- Small horizontal sign: BAR -->
-    <g filter="url(#neon-glow)">
-      <rect x="1090" y="200" width="30" height="14" rx="1" fill="none" stroke="#ffab40" stroke-width="1" />
-      <text x="1105" y="211" text-anchor="middle" fill="#ffab40" font-size="9" font-family="'IBM Plex Mono', monospace" font-weight="600">BAR</text>
-    </g>
-
-    <!-- Telephone pole -->
-    <line x1="680" y1="165" x2="680" y2="510" stroke="#3a4258" stroke-width="3.5" />
-    <line x1="668" y1="180" x2="692" y2="180" stroke="#3a4258" stroke-width="2.5" />
-    <line x1="668" y1="198" x2="692" y2="198" stroke="#3a4258" stroke-width="2.5" />
-
-    <!-- Telephone pole 2 -->
-    <line x1="1050" y1="175" x2="1050" y2="510" stroke="#3a4258" stroke-width="3.5" />
-    <line x1="1038" y1="190" x2="1062" y2="190" stroke="#3a4258" stroke-width="2.5" />
-
-    <!-- Power lines (low, between poles) -->
-    <path d="M 680 180 Q 860 170 1050 190" fill="none" stroke="#3a4258" stroke-width="1" />
-    <path d="M 680 198 Q 620 195 560 200" fill="none" stroke="#3a4258" stroke-width="0.8" />
-    <path d="M 1050 190 Q 1120 185 1200 190" fill="none" stroke="#3a4258" stroke-width="0.8" />
-
-    <!-- Neon puddle reflections on street -->
-    <ellipse cx="640"  cy="535" rx="25" ry="4" fill="#ffcf48" opacity="0.08" />
-    <ellipse cx="760"  cy="535" rx="22" ry="4" fill="#ff2d7b" opacity="0.12" />
-    <ellipse cx="917"  cy="535" rx="25" ry="4" fill="#00e5ff" opacity="0.12" />
-    <ellipse cx="1005" cy="535" rx="28" ry="4" fill="#b967ff" opacity="0.10" />
-    <ellipse cx="1105" cy="535" rx="18" ry="3" fill="#ffab40" opacity="0.08" />
-    <ellipse cx="850"  cy="535" rx="20" ry="3" fill="#39ff8e" opacity="0.06" />
-
-    <!-- Ground fade to background -->
-    <rect x="0" y="543" width="1200" height="7" fill="url(#ground-fade)" />
-    <defs>
+      <filter id="neon-glow">
+        <feGaussianBlur stdDeviation="4" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+      <linearGradient id="howz" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"  stop-color="#3a6a98" />
+        <stop offset="50%" stop-color="#1e4878" />
+        <stop offset="100%" stop-color="#0e2858" />
+      </linearGradient>
+      <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"  stop-color="#d4b894" />
+        <stop offset="50%" stop-color="#b89a78" />
+        <stop offset="100%" stop-color="#8a6c50" />
+      </linearGradient>
+      <linearGradient id="wall-deep" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"  stop-color="#9a7858" />
+        <stop offset="100%" stop-color="#5a3c28" />
+      </linearGradient>
+      <linearGradient id="kilim-grad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"  stop-color="#8a1818" />
+        <stop offset="100%" stop-color="#3a0c0c" />
+      </linearGradient>
+      <linearGradient id="brass" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"  stop-color="#e8b048" />
+        <stop offset="60%" stop-color="#a87018" />
+        <stop offset="100%" stop-color="#684008" />
+      </linearGradient>
       <linearGradient id="ground-fade" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#181e2e" />
-        <stop offset="100%" stop-color="#0e1220" />
+        <stop offset="0%" stop-color="#2a1c40" />
+        <stop offset="100%" stop-color="#0e1530" />
+      </linearGradient>
+      <linearGradient id="cypress" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"  stop-color="#244a2c" />
+        <stop offset="100%" stop-color="#0e2818" />
       </linearGradient>
     </defs>
+
+    <!-- Sun (spring day) -->
+    <circle class="moon-glow1" cx="970" cy="120" r="110" fill="#fce070" opacity="0.18" />
+    <circle class="moon-glow2" cx="970" cy="120" r="72"  fill="#fde890" opacity="0.32" />
+    <circle cx="970" cy="120" r="42" fill="#fef0a8" opacity="0.6" filter="url(#moon-glow)" />
+    <circle cx="970" cy="120" r="32" fill="#fff8c4" opacity="0.95" filter="url(#moon-glow)" />
+
+    <!-- Rose petals drifting -->
+    <ellipse class="petal"  cx="780" cy="60" rx="3"   ry="1.5" fill="#e85a7a" opacity="0" style="animation-delay: 0s;"  />
+    <ellipse class="petal2" cx="850" cy="40" rx="2.5" ry="1.2" fill="#f47ca0" opacity="0" style="animation-delay: 10s;" />
+    <ellipse class="petal"  cx="950" cy="80" rx="2.8" ry="1.3" fill="#e85a7a" opacity="0" style="animation-delay: 18s;" />
+
+    <!-- Skyline scaled & anchored to bottom -->
+    <g transform="translate(0, 137.5) scale(1, 0.75)">
+
+      <!-- ===== Background cypress trees (sarv) — rooted to ground ===== -->
+      <g class="cypress-1">
+        <path d="M 527,510 Q 520,440 523,380 Q 526,330 530,290 Q 534,330 537,380 Q 540,440 533,510 Z" fill="url(#cypress)" />
+      </g>
+      <g class="cypress-2">
+        <path d="M 577,510 Q 571,450 573,400 Q 576,350 580,310 Q 584,350 587,400 Q 589,450 583,510 Z" fill="url(#cypress)" />
+      </g>
+      <g class="cypress-3">
+        <path d="M 621,510 Q 614,440 617,370 Q 620,320 624,280 Q 628,320 631,370 Q 634,440 627,510 Z" fill="url(#cypress)" />
+      </g>
+      <g class="cypress-1">
+        <path d="M 667,510 Q 661,440 663,380 Q 666,330 670,300 Q 674,330 677,380 Q 679,440 673,510 Z" fill="url(#cypress)" />
+      </g>
+      <g class="cypress-2">
+        <path d="M 1097,510 Q 1091,430 1093,360 Q 1096,300 1100,270 Q 1104,300 1107,360 Q 1109,430 1103,510 Z" fill="url(#cypress)" />
+      </g>
+      <g class="cypress-3">
+        <path d="M 1147,510 Q 1141,430 1143,370 Q 1146,310 1150,280 Q 1154,310 1157,370 Q 1159,430 1153,510 Z" fill="url(#cypress)" />
+      </g>
+
+      <!-- ===== Persian house facade (no domes/no minarets) ===== -->
+      <!-- Main wall -->
+      <rect x="730" y="290" width="350" height="200" fill="url(#wall)" />
+
+      <!-- Decorative top parapet -->
+      <rect x="725" y="285" width="360" height="6" fill="#9a7c5a" />
+      <!-- Crenellation pattern (small geometric notches) -->
+      <g fill="#9a7c5a">
+        <rect x="735" y="280" width="6" height="5" />
+        <rect x="755" y="280" width="6" height="5" />
+        <rect x="775" y="280" width="6" height="5" />
+        <rect x="795" y="280" width="6" height="5" />
+        <rect x="815" y="280" width="6" height="5" />
+        <rect x="835" y="280" width="6" height="5" />
+        <rect x="855" y="280" width="6" height="5" />
+        <rect x="875" y="280" width="6" height="5" />
+        <rect x="895" y="280" width="6" height="5" />
+        <rect x="970" y="280" width="6" height="5" />
+        <rect x="990" y="280" width="6" height="5" />
+        <rect x="1010" y="280" width="6" height="5" />
+        <rect x="1030" y="280" width="6" height="5" />
+        <rect x="1050" y="280" width="6" height="5" />
+        <rect x="1070" y="280" width="6" height="5" />
+      </g>
+
+      <!-- Central iwan (recessed pointed-arch entry — domestic, Persian house style) -->
+      <path d="M 870,490 L 870,360 Q 870,310 905,295 Q 940,310 940,360 L 940,490 Z" fill="#1a1228" />
+
+      <!-- Wooden beam over the iwan (header) -->
+      <rect x="858" y="298" width="94" height="8" fill="#5a3818" />
+
+      <!-- Iwan inner side panels (Persian tile pattern hint) -->
+      <g opacity="0.4">
+        <rect x="876" y="370" width="2" height="120" fill="#3ad8d2" />
+        <rect x="932" y="370" width="2" height="120" fill="#3ad8d2" />
+        <!-- Geometric tile pattern hint -->
+        <rect x="880" y="380" width="6" height="6" fill="#3a6a98" />
+        <rect x="922" y="380" width="6" height="6" fill="#3a6a98" />
+        <rect x="880" y="400" width="6" height="6" fill="#d8a83a" />
+        <rect x="922" y="400" width="6" height="6" fill="#d8a83a" />
+        <rect x="880" y="420" width="6" height="6" fill="#e85a7a" />
+        <rect x="922" y="420" width="6" height="6" fill="#e85a7a" />
+      </g>
+
+      <!-- Talar (porch) — two slender wooden columns -->
+      <rect x="868" y="298" width="3" height="195" fill="#3a2410" />
+      <rect x="939" y="298" width="3" height="195" fill="#3a2410" />
+      <!-- Column capitals (small carved tops) -->
+      <rect x="864" y="295" width="11" height="5" fill="#5a3818" />
+      <rect x="935" y="295" width="11" height="5" fill="#5a3818" />
+
+      <!-- Lattice windows (orsi) — left side -->
+      <rect x="755" y="335" width="60" height="90" fill="#1a1228" />
+      <rect x="755" y="335" width="60" height="90" fill="none" stroke="#5a3818" stroke-width="2" />
+      <!-- Lattice grid -->
+      <g stroke="#9a7038" stroke-width="0.6" fill="none" opacity="0.85">
+        <line x1="775" y1="335" x2="775" y2="425" />
+        <line x1="795" y1="335" x2="795" y2="425" />
+        <line x1="755" y1="365" x2="815" y2="365" />
+        <line x1="755" y1="395" x2="815" y2="395" />
+        <!-- Diagonal accents -->
+        <line x1="755" y1="335" x2="815" y2="395" />
+        <line x1="815" y1="335" x2="755" y2="395" />
+      </g>
+      <!-- Colored glass behind lattice (orsi colored panes) -->
+      <g opacity="0.4">
+        <rect x="757" y="367" width="16" height="26" fill="#3a6a98" />
+        <rect x="777" y="367" width="16" height="26" fill="#e85a7a" />
+        <rect x="797" y="367" width="16" height="26" fill="#3ad8d2" />
+        <rect x="757" y="397" width="16" height="26" fill="#3ad8d2" />
+        <rect x="777" y="397" width="16" height="26" fill="#d8a83a" />
+        <rect x="797" y="397" width="16" height="26" fill="#3a6a98" />
+      </g>
+      <!-- Faint inner glow -->
+      <rect class="window-pulse" x="755" y="335" width="60" height="90" fill="#d8a83a" opacity="0" />
+
+      <!-- Lattice windows (orsi) — right side -->
+      <rect x="995" y="335" width="60" height="90" fill="#1a1228" />
+      <rect x="995" y="335" width="60" height="90" fill="none" stroke="#5a3818" stroke-width="2" />
+      <g stroke="#9a7038" stroke-width="0.6" fill="none" opacity="0.85">
+        <line x1="1015" y1="335" x2="1015" y2="425" />
+        <line x1="1035" y1="335" x2="1035" y2="425" />
+        <line x1="995"  y1="365" x2="1055" y2="365" />
+        <line x1="995"  y1="395" x2="1055" y2="395" />
+        <line x1="995"  y1="335" x2="1055" y2="395" />
+        <line x1="1055" y1="335" x2="995"  y2="395" />
+      </g>
+      <g opacity="0.4">
+        <rect x="997"  y="367" width="16" height="26" fill="#3ad8d2" />
+        <rect x="1017" y="367" width="16" height="26" fill="#e85a7a" />
+        <rect x="1037" y="367" width="16" height="26" fill="#d8a83a" />
+        <rect x="997"  y="397" width="16" height="26" fill="#3a6a98" />
+        <rect x="1017" y="397" width="16" height="26" fill="#3ad8d2" />
+        <rect x="1037" y="397" width="16" height="26" fill="#e85a7a" />
+      </g>
+
+      <!-- Hanging lanterns under wooden beam (talar) -->
+      <g class="lamp-sway" style="animation-delay: 0.3s;">
+        <line x1="885" y1="306" x2="885" y2="320" stroke="#3a2418" stroke-width="0.8" />
+        <ellipse cx="885" cy="326" rx="3.5" ry="5" fill="#d8a83a" opacity="0.7" filter="url(#lamp-glow)" />
+        <ellipse cx="885" cy="326" rx="3.5" ry="5" fill="none" stroke="#d8a83a" stroke-width="0.5" opacity="0.9" />
+      </g>
+      <g class="lamp-sway" style="animation-delay: 0.6s;">
+        <line x1="905" y1="306" x2="905" y2="320" stroke="#3a2418" stroke-width="0.8" />
+        <ellipse cx="905" cy="326" rx="3.5" ry="5" fill="#d8a83a" opacity="0.65" filter="url(#lamp-glow)" />
+        <ellipse cx="905" cy="326" rx="3.5" ry="5" fill="none" stroke="#d8a83a" stroke-width="0.5" opacity="0.9" />
+      </g>
+      <g class="lamp-sway" style="animation-delay: 0.9s;">
+        <line x1="925" y1="306" x2="925" y2="320" stroke="#3a2418" stroke-width="0.8" />
+        <ellipse cx="925" cy="326" rx="3.5" ry="5" fill="#d8a83a" opacity="0.7" filter="url(#lamp-glow)" />
+        <ellipse cx="925" cy="326" rx="3.5" ry="5" fill="none" stroke="#d8a83a" stroke-width="0.5" opacity="0.9" />
+      </g>
+
+      <!-- ===== CHAHAR-BAGH (four-fold garden) ===== -->
+
+      <!-- Garden ground tile (warm earth) -->
+      <rect x="500" y="490" width="700" height="20" fill="#3a2818" />
+
+      <!-- Central HOWZ (reflecting pool) -->
+      <rect x="850" y="495" width="160" height="22" fill="url(#howz)" />
+      <!-- Pool tile border -->
+      <g fill="#3ad8d2">
+        <rect x="850" y="492" width="160" height="3" />
+        <rect x="850" y="517" width="160" height="3" />
+      </g>
+      <!-- Tile pattern around pool border -->
+      <g opacity="0.7">
+        <rect x="852" y="488" width="4" height="4" fill="#d8a83a" />
+        <rect x="858" y="488" width="4" height="4" fill="#3a6a98" />
+        <rect x="864" y="488" width="4" height="4" fill="#d8a83a" />
+        <rect x="870" y="488" width="4" height="4" fill="#3a6a98" />
+        <rect x="876" y="488" width="4" height="4" fill="#d8a83a" />
+        <rect x="882" y="488" width="4" height="4" fill="#3a6a98" />
+        <rect x="888" y="488" width="4" height="4" fill="#d8a83a" />
+        <rect x="894" y="488" width="4" height="4" fill="#3a6a98" />
+        <rect x="900" y="488" width="4" height="4" fill="#d8a83a" />
+        <rect x="906" y="488" width="4" height="4" fill="#3a6a98" />
+        <rect x="966" y="488" width="4" height="4" fill="#d8a83a" />
+        <rect x="972" y="488" width="4" height="4" fill="#3a6a98" />
+        <rect x="978" y="488" width="4" height="4" fill="#d8a83a" />
+        <rect x="984" y="488" width="4" height="4" fill="#3a6a98" />
+        <rect x="990" y="488" width="4" height="4" fill="#d8a83a" />
+        <rect x="996" y="488" width="4" height="4" fill="#3a6a98" />
+        <rect x="1002" y="488" width="4" height="4" fill="#d8a83a" />
+      </g>
+
+      <!-- Water shimmer reflections (moon reflected on howz) -->
+      <ellipse class="water-shimmer" cx="930" cy="503" rx="20" ry="1.5" fill="#f0d488" opacity="0" />
+      <line class="water-shimmer2" x1="870" y1="510" x2="990" y2="510" stroke="#fce4a8" stroke-width="0.4" opacity="0" />
+      <line class="water-shimmer" x1="880" y1="500" x2="970" y2="500" stroke="#3ad8d2" stroke-width="0.4" opacity="0" />
+
+      <!-- Water channels (jubbeh) — cross pattern from pool -->
+      <!-- horizontal channel -->
+      <rect x="500" y="503" width="350" height="6" fill="#1e4878" opacity="0.85" />
+      <rect x="1010" y="503" width="190" height="6" fill="#1e4878" opacity="0.85" />
+      <!-- channel water shimmer -->
+      <line class="water-shimmer" x1="600" y1="505" x2="800" y2="505" stroke="#3ad8d2" stroke-width="0.4" opacity="0" />
+      <line class="water-shimmer2" x1="1020" y1="505" x2="1180" y2="505" stroke="#3ad8d2" stroke-width="0.4" opacity="0" />
+
+      <!-- Garden flower beds (4 quadrants around pool) -->
+      <!-- Left bed -->
+      <rect x="700" y="494" width="140" height="8" fill="#244a2c" opacity="0.6" />
+      <!-- Right bed -->
+      <rect x="1020" y="494" width="170" height="8" fill="#244a2c" opacity="0.6" />
+      <!-- Roses scattered (small pink dots) -->
+      <g fill="#e85a7a">
+        <circle cx="720" cy="498" r="1.2" />
+        <circle cx="740" cy="498" r="1.4" />
+        <circle cx="765" cy="498" r="1.2" />
+        <circle cx="785" cy="498" r="1.5" />
+        <circle cx="810" cy="498" r="1.2" />
+        <circle cx="830" cy="498" r="1.3" />
+        <circle cx="1030" cy="498" r="1.4" />
+        <circle cx="1055" cy="498" r="1.2" />
+        <circle cx="1080" cy="498" r="1.5" />
+        <circle cx="1110" cy="498" r="1.3" />
+        <circle cx="1140" cy="498" r="1.2" />
+        <circle cx="1170" cy="498" r="1.4" />
+      </g>
+      <!-- Rose leaves -->
+      <g fill="#244a2c">
+        <ellipse cx="730" cy="500" rx="3" ry="1" />
+        <ellipse cx="775" cy="500" rx="3" ry="1" />
+        <ellipse cx="820" cy="500" rx="3" ry="1" />
+        <ellipse cx="1045" cy="500" rx="3" ry="1" />
+        <ellipse cx="1095" cy="500" rx="3" ry="1" />
+        <ellipse cx="1155" cy="500" rx="3" ry="1" />
+      </g>
+
+      <!-- Pomegranate tree on far right (curving branch) -->
+      <g transform="translate(1080, 380)">
+        <!-- trunk -->
+        <path d="M 0,110 Q -2,80 4,40 Q 8,10 14,-20" stroke="#3a2810" stroke-width="2.5" fill="none" />
+        <!-- branches -->
+        <path d="M 8,30 Q 22,20 30,8" stroke="#3a2810" stroke-width="1.5" fill="none" />
+        <path d="M 12,0 Q 26,-8 36,-22" stroke="#3a2810" stroke-width="1.5" fill="none" />
+        <!-- leaves clusters -->
+        <ellipse cx="22" cy="6" rx="14" ry="10" fill="#244a2c" opacity="0.85" />
+        <ellipse cx="34" cy="-18" rx="12" ry="9" fill="#244a2c" opacity="0.85" />
+        <!-- pomegranates -->
+        <circle cx="18" cy="10" r="2.5" fill="#a82828" />
+        <circle cx="26" cy="2" r="2.5" fill="#c83838" />
+        <circle cx="32" cy="-14" rx="2.5" r="2.5" fill="#b83030" />
+      </g>
+
+      <!-- Persian cat on right side of building rooftop, looking left -->
+      <g transform="translate(1050, 274) scale(-1, 1)">
+        <ellipse cx="8" cy="6" rx="6" ry="4" fill="#2a1c14" />
+        <circle cx="14" cy="2" r="3.5" fill="#2a1c14" />
+        <polygon points="12,-2 11,2 13,1" fill="#2a1c14" />
+        <polygon points="16,-2 15,1 17,2" fill="#2a1c14" />
+        <path class="cat-tail" d="M 2 6 Q -4 0 -2 -3" fill="none" stroke="#2a1c14" stroke-width="2" stroke-linecap="round" />
+      </g>
+
+      <!-- ===== Foreground: Persian rug, samovar, books, jug ===== -->
+
+      <!-- Persian rug (kilim) -->
+      <rect x="600" y="492" width="100" height="15" fill="url(#kilim-grad)" />
+      <line x1="600" y1="496" x2="700" y2="496" stroke="#d8a83a" stroke-width="0.4" opacity="0.5" />
+      <line x1="600" y1="503" x2="700" y2="503" stroke="#d8a83a" stroke-width="0.4" opacity="0.5" />
+      <!-- Carpet medallion + diamonds -->
+      <g opacity="0.6">
+        <polygon points="650,499 654,495 658,499 654,503" fill="#d8a83a" stroke="#fce4a8" stroke-width="0.3" />
+        <polygon points="620,499 623,496 626,499 623,502" fill="#3ad8d2" />
+        <polygon points="635,499 638,496 641,499 638,502" fill="#fce4a8" />
+        <polygon points="665,499 668,496 671,499 668,502" fill="#3ad8d2" />
+        <polygon points="680,499 683,496 686,499 683,502" fill="#fce4a8" />
+      </g>
+      <!-- Tassels -->
+      <g stroke="#7a4810" stroke-width="0.4">
+        <line x1="600" y1="507" x2="601" y2="512" />
+        <line x1="604" y1="507" x2="605" y2="512" />
+        <line x1="696" y1="507" x2="697" y2="512" />
+        <line x1="700" y1="507" x2="699" y2="512" />
+      </g>
+
+      <!-- Samovar (brass kettle) on rug -->
+      <g transform="translate(610, 480)">
+        <rect x="0" y="22" width="14" height="3" rx="0.5" fill="#684008" />
+        <ellipse cx="7" cy="14" rx="6.5" ry="8" fill="url(#brass)" />
+        <rect x="4" y="3" width="6" height="4" fill="#a87018" />
+        <rect x="5.5" y="-3" width="3" height="6" fill="#684008" />
+        <path d="M 13 12 Q 17 14 13 18" fill="none" stroke="#684008" stroke-width="0.6" />
+        <path d="M 0 14 Q -3 13 -3 16" fill="none" stroke="#684008" stroke-width="0.6" />
+      </g>
+      <!-- Steam from samovar -->
+      <g transform="translate(615, 472)">
+        <ellipse class="steam"  cx="0"  cy="0" rx="1.5" ry="2"   fill="#f0e8c8" opacity="0" />
+        <ellipse class="steam2" cx="2"  cy="0" rx="1.2" ry="1.6" fill="#f0e8c8" opacity="0" />
+        <ellipse class="steam3" cx="-2" cy="0" rx="1.3" ry="1.8" fill="#f0e8c8" opacity="0" />
+      </g>
+
+      <!-- Book of Persian poetry (divan-e Hafez) on rug -->
+      <g transform="translate(645, 498)">
+        <rect x="0" y="0" width="14" height="6" fill="#5a1818" />
+        <rect x="0" y="0" width="14" height="1.5" fill="#7a2828" />
+        <line x1="0" y1="3" x2="14" y2="3" stroke="#d8a83a" stroke-width="0.3" opacity="0.7" />
+        <!-- Gold ornament -->
+        <circle cx="7" cy="3" r="0.8" fill="#d8a83a" opacity="0.8" />
+      </g>
+
+      <!-- Clay teapot on rug -->
+      <g transform="translate(672, 497)">
+        <ellipse cx="0" cy="6" rx="4" ry="3.5" fill="#8a4828" />
+        <rect x="-1.5" y="2" width="3" height="3" fill="#7a3818" />
+        <ellipse cx="0" cy="2" rx="2" ry="1" fill="#a85a3a" />
+        <circle cx="0" cy="0.5" r="0.8" fill="#5a2810" />
+        <path d="M -3.5 6 Q -6 6 -6 4" fill="none" stroke="#7a3818" stroke-width="0.8" />
+        <path d="M 3.5 6 Q 6 5 6 3" fill="none" stroke="#7a3818" stroke-width="0.8" />
+      </g>
+
+      <!-- Hookah (qalyan) next to rug -->
+      <g transform="translate(740, 480)">
+        <ellipse cx="0" cy="20" rx="6" ry="6" fill="#3a2818" />
+        <ellipse cx="-2" cy="18" rx="2" ry="2" fill="#a85a3a" opacity="0.45" />
+        <rect x="-1" y="6" width="2" height="14" fill="#684008" />
+        <rect x="-2.5" y="3" width="5" height="3" fill="#a87018" />
+        <rect x="-2" y="0" width="4" height="3" fill="#684008" />
+        <path d="M 4 15 Q 14 20 18 14 Q 14 8 8 12" fill="none" stroke="#3a1818" stroke-width="0.8" />
+        <circle cx="8" cy="12" r="0.8" fill="#d8a83a" />
+      </g>
+
+      <!-- Pile of pomegranates at base of pomegranate tree -->
+      <g transform="translate(1090, 500)">
+        <ellipse cx="0" cy="3" rx="3" ry="2.5" fill="#a82828" />
+        <line x1="0" y1="0" x2="0" y2="-1.5" stroke="#5a3010" stroke-width="0.4" />
+        <ellipse cx="6" cy="3" rx="3" ry="2.5" fill="#c83838" />
+        <line x1="6" y1="0" x2="6" y2="-1.5" stroke="#5a3010" stroke-width="0.4" />
+        <ellipse cx="3" cy="-1" rx="2.8" ry="2.3" fill="#b83030" />
+        <line x1="3" y1="-3.5" x2="3" y2="-5" stroke="#5a3010" stroke-width="0.4" />
+        <polygon points="3,-3.5 2,-4.5 4,-4.5" fill="#5a3010" />
+      </g>
+
+      <!-- Clay water jug (kuzeh) on left -->
+      <g transform="translate(550, 482)">
+        <ellipse cx="0" cy="20" rx="6" ry="2" fill="#3a1810" />
+        <path d="M -5 20 Q -7 8 -3 0 Q 0 -3 3 0 Q 7 8 5 20 Z" fill="#8a4828" />
+        <ellipse cx="0" cy="0" rx="3" ry="1" fill="#5a2810" />
+        <path d="M 4 6 Q 7 8 7 12" fill="none" stroke="#5a2810" stroke-width="0.8" />
+      </g>
+
+      <!-- Standing lantern post -->
+      <g transform="translate(720, 488)">
+        <line x1="0" y1="0" x2="0" y2="-15" stroke="#3a2418" stroke-width="0.6" />
+        <ellipse cx="0" cy="6" rx="4" ry="6" fill="#d8a83a" opacity="0.3" filter="url(#lamp-glow)" />
+        <path d="M -3 11 L -3 1 Q -3 -2 0 -3 Q 3 -2 3 1 L 3 11 Z"
+              fill="none" stroke="#d8a83a" stroke-width="0.6" />
+        <line x1="-2" y1="9" x2="2" y2="3" stroke="#d8a83a" stroke-width="0.3" opacity="0.6" />
+        <line x1="-2" y1="3" x2="2" y2="9" stroke="#d8a83a" stroke-width="0.3" opacity="0.6" />
+      </g>
+
+      <!-- Garden ground/sidewalk -->
+      <rect x="0" y="510" width="1200" height="6" fill="#1a1228" />
+      <rect x="0" y="516" width="1200" height="34" fill="#0e1530" />
+
+      <!-- Subtle path tile pattern at bottom -->
+      <g opacity="0.25" stroke="#3a2858" stroke-width="0.3">
+        <line x1="100" y1="525" x2="180" y2="525" stroke-dasharray="3,5" />
+        <line x1="280" y1="535" x2="380" y2="535" stroke-dasharray="3,5" />
+      </g>
+
+      <!-- Reflective glow puddles -->
+      <ellipse cx="668"  cy="538" rx="28" ry="3" fill="#d8a83a" opacity="0.10" />
+      <ellipse cx="905"  cy="535" rx="40" ry="3" fill="#3ad8d2" opacity="0.10" />
+      <ellipse cx="1100" cy="537" rx="20" ry="2" fill="#e85a7a" opacity="0.08" />
+
+      <!-- Ground fade to background -->
+      <rect x="0" y="543" width="1200" height="7" fill="url(#ground-fade)" />
+
     </g>
   </svg>
 
@@ -720,6 +846,7 @@
     <p class="name">
       <span class="prompt">&gt;</span>Arshia Pessaran
     </p>
+    <p class="name-fa">آرشیا پسران</p>
 
     <ul class="tree">
 
@@ -780,6 +907,7 @@
             <li class="folder" data-group="project">
               <div class="row">
                 <span class="conn">    ├── </span>
+                <span class="pn">۱</span>
                 <span class="label">Bludly</span>
               </div>
               <div class="collapsible">
@@ -811,6 +939,7 @@
             <li class="folder" data-group="project">
               <div class="row">
                 <span class="conn">    ├── </span>
+                <span class="pn">۲</span>
                 <span class="label">Nautiq</span>
               </div>
               <div class="collapsible">
@@ -855,6 +984,7 @@
             <li class="folder" data-group="project">
               <div class="row">
                 <span class="conn">    ├── </span>
+                <span class="pn">۳</span>
                 <span class="label">PDF Reconstruction Pipeline</span>
               </div>
               <div class="collapsible">
@@ -886,6 +1016,7 @@
             <li class="folder" data-group="project">
               <div class="row">
                 <span class="conn">    └── </span>
+                <span class="pn">۴</span>
                 <span class="label">TradingView Heatmap Bot</span>
               </div>
               <div class="collapsible">
@@ -966,7 +1097,6 @@
       }
     }
 
-    // ── Resume modal ──────────────────────────────────────────────
     pdfjsLib.GlobalWorkerOptions.workerSrc =
       'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -983,7 +1113,6 @@
       for (let i = 1; i <= pdf.numPages; i++) {
         const page     = await pdf.getPage(i);
         const viewport = page.getViewport({ scale: 1 });
-        // scale to fit viewport height
         const fitScale = availH / viewport.height;
         const scale    = fitScale * dpr;
         const scaled   = page.getViewport({ scale });
@@ -1036,7 +1165,6 @@
         .addEventListener('click', () => toggleFolder(folder));
     });
 
-    // Randomize animation durations ±1s each cycle
     const animatedSelectors = [
       { sel: '.sign-flicker',  base: 4  },
       { sel: '.sign-flicker2', base: 6  },
@@ -1055,4 +1183,3 @@
 
 </body>
 </html>
-
