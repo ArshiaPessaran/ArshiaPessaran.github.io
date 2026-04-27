@@ -4,920 +4,200 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Arshia Pessaran</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%230e1220'/><mask id='m'><circle cx='16' cy='16' r='10' fill='white'/><circle cx='22' cy='12' r='8' fill='black'/></mask><circle cx='16' cy='16' r='10' fill='%23f5e080' mask='url(%23m)'/><circle cx='16' cy='16' r='13' fill='%23f5e080' opacity='0.15'/></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=block" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
-    :root {
-      --bg:      #0b0e1a;
-      --text:    #e0dfe6;
-      --neon1:   #00e5ff;
-      --neon2:   #ff2d7b;
-      --neon3:   #b967ff;
-      --neon4:   #39ff8e;
-      --neon5:   #ffab40;
-      --muted:   #7a8ba8;
-      --dim:     #7888a8;
-      --glow1:   rgba(0, 229, 255, 0.35);
-      --glow2:   rgba(255, 45, 123, 0.35);
-      --glow3:   rgba(185, 103, 255, 0.35);
-      --glow4:   rgba(57, 255, 142, 0.35);
-      --glow5:   rgba(255, 171, 64, 0.35);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { background: #0e1220; }
-    html, body {
-      height: 100%;
-
-      color: var(--text);
-      font-family: 'IBM Plex Mono', 'Courier New', monospace;
-      font-size: 15px;
-      line-height: 1.4;
-      overflow-x: hidden;
-    }
-
-    body { padding: 56px 64px; position: relative; }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(135deg, #1e2a48 0%, #141a30 50%, #0e1220 100%);
-      z-index: -1;
-    }
-
-    /* ── Name ──────────────────────────────────────────────────── */
-    .name {
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      margin-bottom: 20px;
-      color: #fff;
-      text-shadow: 0 0 8px var(--glow1), 0 0 20px var(--glow1);
-    }
-
-    .prompt {
-      color: var(--neon1);
-      font-weight: 400;
-      margin-right: 0.45em;
-    }
-
-    /* ── Tree ──────────────────────────────────────────────────── */
-    ul.tree, ul.subtree {
-      list-style: none;
-      user-select: none;
-    }
-
-    .row {
-      display: flex;
-      align-items: baseline;
-      padding: 2px 0;
-    }
-
-    .conn {
-      color: var(--dim);
-      white-space: pre;
-      flex-shrink: 0;
-    }
-
-    .label {
-      color: var(--text);
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    a.label:hover, span.label:hover {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-color: var(--muted);
-    }
-
-    /* ── Text color ─────────────────────────────────────────────── */
-    .tree .label,
-    .subtree .label {
-      color: #b0d4e8;
-      text-shadow: none;
-    }
-
-    .about-text,
-    .detail-text {
-      color: #90b8d0;
-    }
-
-    /* ── Folder row ────────────────────────────────────────────── */
-    .folder > .row .label {
-      font-weight: 500;
-    }
-
-    .folder > .row .label::after {
-      content: ' ▸';
-      font-size: 0.7em;
-      color: var(--dim);
-      transition: transform 0.25s ease;
-      display: inline-block;
-      margin-left: 0.3em;
-      transform-origin: center 45%;
-    }
-
-    .folder.open > .row .label::after {
-      transform: rotate(90deg);
-    }
-
-    /* ── Collapsible containers ────────────────────────────────── */
     .collapsible {
       overflow: hidden;
       max-height: 0;
-      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* ── About text ────────────────────────────────────────────── */
-    .about-text {
-      font-size: 13px;
-      line-height: 1.75;
-      max-width: 420px;
-      padding: 4px 0 8px 0;
-    }
-
-    .about-text p + p {
-      margin-top: 0.9em;
-    }
-
-    /* ── Project detail ────────────────────────────────────────── */
-    .detail-wrap {
-      display: flex;
-      align-items: flex-start;
-      gap: 18px;
-      padding: 4px 0 8px 0;
-    }
-
-    .detail-text {
-      font-size: 13px;
-      line-height: 1.7;
-      max-width: 340px;
-    }
-
-    .detail-img {
-      width: 96px;
-      height: 64px;
-      background: var(--dim);
-      opacity: 0.5;
-      flex-shrink: 0;
-    }
-
-    /* dim connectors when folder is closed */
-    .folder:not(.open) > .row .conn {
-      opacity: 0.4;
-    }
-
-    /* ── Tokyo cityscape ───────────────────────────────────────── */
-    .cityscape {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100vw;
-      height: auto;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.95;
-    }
-
-    .content-layer {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* neon sign flicker */
-    @keyframes flicker {
-      0%, 100% { opacity: 1; }
-      4%       { opacity: 0.2; }
-      6%       { opacity: 1; }
-      42%      { opacity: 1; }
-      44%      { opacity: 0.15; }
-      46%      { opacity: 0.9; }
-      47%      { opacity: 0.2; }
-      49%      { opacity: 1; }
-      80%      { opacity: 1; }
-      82%      { opacity: 0.4; }
-      83%      { opacity: 1; }
-    }
-
-    @keyframes flicker2 {
-      0%, 100% { opacity: 0.9; }
-      20%      { opacity: 0.9; }
-      21%      { opacity: 0.3; }
-      22%      { opacity: 0.85; }
-      60%      { opacity: 0.85; }
-      61%      { opacity: 0.1; }
-      62%      { opacity: 0.7; }
-      63%      { opacity: 0.1; }
-      64%      { opacity: 0.9; }
-    }
-
-    @keyframes glow-pulse {
-      0%, 100% { opacity: 0.5; }
-      50%      { opacity: 0.8; }
-    }
-
-    @keyframes lampSway {
-      0%, 100% { transform: rotate(0deg); }
-      25%      { transform: rotate(0.5deg); }
-      75%      { transform: rotate(-0.5deg); }
-    }
-
-    @keyframes petal-drift {
-      0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
-      10%  { opacity: 0.6; }
-      80%  { opacity: 0.5; }
-      100% { transform: translate(-80px, 180px) rotate(260deg); opacity: 0; }
-    }
-
-    @keyframes petal-drift2 {
-      0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
-      10%  { opacity: 0.5; }
-      80%  { opacity: 0.4; }
-      100% { transform: translate(-60px, 200px) rotate(320deg); opacity: 0; }
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.15; }
-      50%      { opacity: 0.6; }
-    }
-
-    .star-twinkle { animation: twinkle 3s ease-in-out infinite; }
-
-    .petal  { animation: petal-drift 20s ease-in-out infinite; }
-    .petal2 { animation: petal-drift2 25s ease-in-out infinite; }
-
-    @keyframes moon-breathe {
-      0%, 100% { opacity: 0.04; }
-      50%      { opacity: 0.08; }
-    }
-    @keyframes moon-breathe2 {
-      0%, 100% { opacity: 0.06; }
-      50%      { opacity: 0.11; }
-    }
-    .moon-glow1 { animation: moon-breathe 6s ease-in-out infinite; }
-    .moon-glow2 { animation: moon-breathe2 6s ease-in-out infinite; }
-
-    @keyframes tail-flick {
-      0%, 46%  { d: path("M 2 6 Q -4 0 -2 -3"); }
-      50%, 96% { d: path("M 2 6 Q 0 -2 4 -3"); }
-      100%     { d: path("M 2 6 Q -4 0 -2 -3"); }
-    }
-
-    .cat-tail { animation: tail-flick 16s ease-in-out infinite; }
-
-    .sign-flicker  { animation: flicker 4s infinite; }
-    .sign-flicker2 { animation: flicker2 6s infinite 1s; }
-    .window-pulse  { animation: glow-pulse 3s ease-in-out infinite; }
-    .lamp-sway     { animation: lampSway 5s ease-in-out infinite; transform-origin: top center; }
-
-    /* ── Mobile ─────────────────────────────────────────────────── */
-    @media (max-width: 600px) {
-      body { padding: 36px 28px; }
-      .name { font-size: 18px; }
-      .detail-wrap { flex-direction: column; }
-      .detail-img  { width: 100%; height: 56px; }
-      .modal-scroll { height: 82vh; }
-      .cityscape { width: 100vw; opacity: 0.45; }
-    }
-
-    /* ── Resume modal ───────────────────────────────────────────── */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(11, 14, 26, 0.65);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-      z-index: 100;
-    }
-
-    .modal-overlay.visible {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .modal-scroll {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      max-height: calc(100vh - 80px);
-      max-height: calc(100dvh - 80px);
-      margin-top: 60px;
-      overflow: hidden;
-    }
-
-    #pdf-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
-
-    #pdf-container canvas {
-      display: block;
-      max-height: calc(100vh - 100px);
-      width: auto;
-      height: auto;
-    }
-
-    .modal-actions {
-      position: fixed;
-      top: 24px;
-      right: 32px;
-      display: flex;
-      gap: 16px;
-    }
-
-    .modal-btn {
-      font-family: inherit;
-      font-size: 13px;
-      color: #d0e8f5;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-    }
-
-    .modal-btn:hover {
-      color: var(--text);
+      transition: max-height 0.4s ease;
     }
   </style>
 </head>
 <body>
 
-  <!-- Tokyo cityscape background -->
-  <svg class="cityscape" viewBox="0 0 1200 550" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
-    <!-- Moon -->
-    <defs>
-      <filter id="moon-glow">
-        <feGaussianBlur stdDeviation="12" result="blur" />
-        <feMerge>
-          <feMergeNode in="blur" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
-      <mask id="moon-mask">
-        <circle cx="970" cy="120" r="32" fill="white" />
-        <circle cx="990" cy="108" r="28" fill="black" />
-      </mask>
-    </defs>
-    <!-- Moon ambient glow -->
-    <circle class="moon-glow1" cx="970" cy="120" r="80" fill="#d4b850" opacity="0.04" />
-    <circle class="moon-glow2" cx="970" cy="120" r="55" fill="#e0c860" opacity="0.06" />
-    <!-- Moon body -->
-    <circle cx="970" cy="120" r="40" fill="#f0d870" opacity="0.07" filter="url(#moon-glow)" />
-    <circle cx="970" cy="120" r="32" fill="#f5e080" opacity="0.20" mask="url(#moon-mask)" filter="url(#moon-glow)" />
+  <p>&gt; Arshia Pessaran</p>
 
-    <!-- Cherry blossom petals -->
-    <ellipse class="petal" cx="780" cy="60" rx="3" ry="1.5" fill="#ff8fa8" opacity="0" style="animation-delay: 0s;" />
-    <ellipse class="petal2" cx="850" cy="40" rx="2.5" ry="1.2" fill="#ffb0c4" opacity="0" style="animation-delay: 10s;" />
-    <ellipse class="petal" cx="950" cy="80" rx="2.8" ry="1.3" fill="#ff8fa8" opacity="0" style="animation-delay: 18s;" />
+  <ul class="tree">
 
-    <!-- Stars -->
-    <circle cx="680" cy="45" r="1.2" fill="#e0dfe6" opacity="0.4" class="star-twinkle" style="animation-delay: 0s;" />
-    <circle cx="750" cy="85" r="0.8" fill="#e0dfe6" opacity="0.25" />
-    <circle cx="830" cy="30" r="1.0" fill="#e0dfe6" opacity="0.35" class="star-twinkle" style="animation-delay: 1.5s;" />
-    <circle cx="1000" cy="55" r="1.3" fill="#e0dfe6" opacity="0.3" />
-    <circle cx="1080" cy="25" r="0.9" fill="#e0dfe6" opacity="0.4" class="star-twinkle" style="animation-delay: 2.8s;" />
-    <circle cx="1150" cy="70" r="1.1" fill="#e0dfe6" opacity="0.25" />
-    <circle cx="620" cy="90" r="0.7" fill="#e0dfe6" opacity="0.3" />
-    <circle cx="770" cy="15" r="1.0" fill="#e0dfe6" opacity="0.35" class="star-twinkle" style="animation-delay: 4.2s;" />
-    <circle cx="1050" cy="90" r="0.8" fill="#e0dfe6" opacity="0.2" />
-    <circle cx="870" cy="65" r="1.1" fill="#e0dfe6" opacity="0.3" class="star-twinkle" style="animation-delay: 1s;" />
-    <circle cx="960" cy="20" r="0.9" fill="#e0dfe6" opacity="0.4" />
-    <circle cx="700" cy="110" r="0.7" fill="#e0dfe6" opacity="0.2" />
-
-    <!-- Scale everything 75% vertically, anchored to bottom (y=550) -->
-    <g transform="translate(0, 137.5) scale(1, 0.75)">
-    <defs>
-      <filter id="neon-glow">
-        <feGaussianBlur stdDeviation="4" result="blur" />
-        <feMerge>
-          <feMergeNode in="blur" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
-      <filter id="sign-glow">
-        <feGaussianBlur stdDeviation="6" result="blur" />
-        <feMerge>
-          <feMergeNode in="blur" />
-          <feMergeNode in="blur" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
-      <filter id="lamp-glow">
-        <feGaussianBlur stdDeviation="8" result="blur" />
-        <feMerge>
-          <feMergeNode in="blur" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
-    </defs>
-
-    <!-- Buildings — right half only (start ~600) -->
-    <rect x="560" y="240" width="60"  height="280" fill="#1c2436" />
-    <rect x="630" y="180" width="80"  height="340" fill="#253044" />
-    <rect x="720" y="120" width="70"  height="400" fill="#1f283c" />
-    <rect x="800" y="200" width="90"  height="320" fill="#232c42" />
-    <rect x="900" y="80"  width="65"  height="440" fill="#1b2234" />
-    <rect x="975" y="160" width="85"  height="360" fill="#253046" />
-    <rect x="1070" y="100" width="75" height="420" fill="#1e273a" />
-    <rect x="1155" y="190" width="50" height="330" fill="#212a40" />
-
-    <!-- Rooftop antennas -->
-    <line x1="735" y1="120" x2="735" y2="88" stroke="#3a4258" stroke-width="1.5" />
-    <line x1="730" y1="95" x2="740" y2="90" stroke="#3a4258" stroke-width="1" />
-    <line x1="740" y1="95" x2="730" y2="90" stroke="#3a4258" stroke-width="1" />
-
-    <line x1="920" y1="80" x2="920" y2="50" stroke="#3a4258" stroke-width="1.5" />
-    <line x1="915" y1="58" x2="925" y2="53" stroke="#3a4258" stroke-width="1" />
-    <line x1="925" y1="62" x2="915" y2="57" stroke="#3a4258" stroke-width="1" />
-    <!-- blinking red light on antenna -->
-    <circle cx="920" cy="50" r="2" fill="#ff2d7b" opacity="0.7" class="window-pulse" />
-
-    <line x1="1095" y1="100" x2="1095" y2="72" stroke="#3a4258" stroke-width="1.5" />
-    <line x1="1090" y1="78" x2="1100" y2="73" stroke="#3a4258" stroke-width="1" />
-
-    <!-- Rooftop water tank -->
-    <rect x="800" y="190" width="20" height="10" rx="1" fill="#2a3348" />
-    <rect x="805" y="185" width="10" height="5" rx="0.5" fill="#2a3348" />
-
-    <!-- AC units on building walls -->
-    <rect x="618" y="260" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
-    <rect x="618" y="310" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
-    <rect x="868" y="220" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
-    <rect x="868" y="290" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
-    <rect x="1048" y="180" width="10" height="7" rx="1" fill="#2a3348" stroke="#354060" stroke-width="0.5" />
-
-    <!-- Cat silhouette on rooftop -->
-    <g transform="translate(565, 232)">
-      <!-- body -->
-      <ellipse cx="8" cy="6" rx="6" ry="4" fill="#3a4560" />
-      <!-- head -->
-      <circle cx="14" cy="2" r="3.5" fill="#3a4560" />
-      <!-- ears -->
-      <polygon points="12,-2 11,2 13,1" fill="#3a4560" />
-      <polygon points="16,-2 15,1 17,2" fill="#3a4560" />
-      <!-- tail -->
-      <path class="cat-tail" d="M 2 6 Q -4 0 -2 -3" fill="none" stroke="#3a4560" stroke-width="2" stroke-linecap="round" />
-    </g>
-
-    <!-- Windows on buildings -->
-    <g class="window-pulse" style="animation-delay: 0.5s;">
-      <rect x="650" y="200" width="4" height="4" fill="#ffcf48" opacity="0.7" />
-      <rect x="685" y="200" width="4" height="4" fill="#253040" />
-      <rect x="650" y="220" width="4" height="4" fill="#253040" />
-      <rect x="685" y="240" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="650" y="280" width="4" height="4" fill="#ffcf48" opacity="0.6" />
-      <rect x="685" y="300" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-      <rect x="575" y="260" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="575" y="300" width="4" height="4" fill="#253040" />
-      <rect x="595" y="280" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-    </g>
-    <g class="window-pulse" style="animation-delay: 1.5s;">
-      <rect x="740" y="140" width="4" height="4" fill="#ffcf48" opacity="0.6" />
-      <rect x="760" y="140" width="4" height="4" fill="#253040" />
-      <rect x="740" y="180" width="4" height="4" fill="#253040" />
-      <rect x="760" y="180" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="740" y="220" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-      <rect x="760" y="260" width="4" height="4" fill="#ffcf48" opacity="0.6" />
-      <rect x="820" y="220" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="860" y="220" width="4" height="4" fill="#253040" />
-      <rect x="820" y="260" width="4" height="4" fill="#253040" />
-      <rect x="860" y="280" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-    </g>
-    <g>
-      <rect x="920" y="100" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="940" y="100" width="4" height="4" fill="#253040" />
-      <rect x="920" y="140" width="4" height="4" fill="#ffcf48" opacity="0.6" />
-      <rect x="940" y="160" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-      <rect x="920" y="200" width="4" height="4" fill="#253040" />
-      <rect x="940" y="220" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="995" y="180" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-      <rect x="1030" y="180" width="4" height="4" fill="#253040" />
-      <rect x="995" y="220" width="4" height="4" fill="#ffcf48" opacity="0.6" />
-      <rect x="1030" y="240" width="4" height="4" fill="#ffcf48" opacity="0.3" />
-      <rect x="1085" y="120" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="1110" y="140" width="4" height="4" fill="#253040" />
-      <rect x="1085" y="180" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-      <rect x="1110" y="200" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-      <rect x="1170" y="210" width="4" height="4" fill="#ffcf48" opacity="0.4" />
-      <rect x="1170" y="250" width="4" height="4" fill="#253040" />
-      <rect x="1170" y="290" width="4" height="4" fill="#ffcf48" opacity="0.5" />
-    </g>
-
-    <!-- Power lines (high) -->
-    <path d="M 540 220 Q 700 205 880 215 Q 1000 225 1200 210"
-          fill="none" stroke="#2a3348" stroke-width="1" />
-    <path d="M 540 225 Q 700 210 880 220 Q 1000 230 1200 215"
-          fill="none" stroke="#2a3348" stroke-width="0.8" />
-
-    <!-- SIGNS -->
-
-    <!-- Neon sign 1: ラーメン (ramen) — flickering -->
-    <g class="sign-flicker" filter="url(#sign-glow)">
-      <rect x="534" y="182" width="62" height="26" rx="2" fill="none" stroke="#ff2d7b" stroke-width="1.5" />
-      <text x="565" y="201" text-anchor="middle" fill="#ff2d7b" font-size="15" font-family="sans-serif">ラーメン</text>
-    </g>
-
-    <!-- Neon sign 2: 居酒屋 (izakaya) — steady glow -->
-    <g filter="url(#sign-glow)">
-      <rect x="890" y="155" width="55" height="22" rx="2" fill="none" stroke="#00e5ff" stroke-width="1.5" />
-      <text x="917" y="170" text-anchor="middle" fill="#00e5ff" font-size="12" font-family="sans-serif">居酒屋</text>
-    </g>
-
-    <!-- Paper lanterns outside izakaya -->
-    <g class="lamp-sway" style="animation-delay: 0.5s;">
-      <line x1="893" y1="178" x2="893" y2="188" stroke="#3a4258" stroke-width="0.8" />
-      <ellipse cx="893" cy="192" rx="4" ry="5" fill="#ff2d7b" opacity="0.5" />
-      <ellipse cx="893" cy="192" rx="4" ry="5" fill="none" stroke="#ff2d7b" stroke-width="0.5" opacity="0.8" />
-    </g>
-    <g class="lamp-sway" style="animation-delay: 0.8s;">
-      <line x1="907" y1="178" x2="907" y2="188" stroke="#3a4258" stroke-width="0.8" />
-      <ellipse cx="907" cy="192" rx="4" ry="5" fill="#ff2d7b" opacity="0.45" />
-      <ellipse cx="907" cy="192" rx="4" ry="5" fill="none" stroke="#ff2d7b" stroke-width="0.5" opacity="0.8" />
-    </g>
-    <g class="lamp-sway" style="animation-delay: 1.1s;">
-      <line x1="921" y1="178" x2="921" y2="188" stroke="#3a4258" stroke-width="0.8" />
-      <ellipse cx="921" cy="192" rx="4" ry="5" fill="#ff2d7b" opacity="0.5" />
-      <ellipse cx="921" cy="192" rx="4" ry="5" fill="none" stroke="#ff2d7b" stroke-width="0.5" opacity="0.8" />
-    </g>
-    <g class="lamp-sway" style="animation-delay: 1.4s;">
-      <line x1="935" y1="178" x2="935" y2="188" stroke="#3a4258" stroke-width="0.8" />
-      <ellipse cx="935" cy="192" rx="4" ry="5" fill="#ff2d7b" opacity="0.45" />
-      <ellipse cx="935" cy="192" rx="4" ry="5" fill="none" stroke="#ff2d7b" stroke-width="0.5" opacity="0.8" />
-    </g>
-
-    <!-- Neon sign 3: カラオケ (karaoke) — flicker2 -->
-    <g class="sign-flicker2" filter="url(#sign-glow)">
-      <rect x="972" y="246" width="66" height="24" rx="2" fill="none" stroke="#b967ff" stroke-width="1.5" />
-      <text x="1005" y="263" text-anchor="middle" fill="#b967ff" font-size="14" font-family="sans-serif">カラオケ</text>
-    </g>
-
-    <!-- Vertical neon sign: ホテル on tall building -->
-    <g filter="url(#neon-glow)">
-      <text x="938" y="240" fill="#ff2d7b" font-size="10" font-family="sans-serif" writing-mode="tb">ホテル</text>
-    </g>
-
-    <!-- Neon sign: 24h convenience store -->
-    <g filter="url(#neon-glow)">
-      <text x="830" y="260" text-anchor="middle" fill="#00e5ff" font-size="13" font-family="'IBM Plex Mono', monospace" font-weight="600">24h</text>
-    </g>
-
-    <!-- Vertical neon: 喫茶 (coffee shop) -->
-    <g class="sign-flicker2" style="animation-delay: 3s;" filter="url(#neon-glow)">
-      <text x="660" y="260" fill="#ffab40" font-size="11" font-family="sans-serif" writing-mode="tb">喫茶</text>
-    </g>
-
-    <!-- Neon sign: 寿司 (sushi) -->
-    <g class="sign-flicker" style="animation-delay: 1.5s;" filter="url(#sign-glow)">
-      <rect x="1155" y="250" width="42" height="20" rx="2" fill="none" stroke="#39ff8e" stroke-width="1.5" />
-      <text x="1176" y="264" text-anchor="middle" fill="#39ff8e" font-size="11" font-family="sans-serif">寿司</text>
-    </g>
-
-    <!-- Street lamp center -->
-    <g>
-      <line x1="620" y1="390" x2="620" y2="510" stroke="#3a4258" stroke-width="3" />
-      <line x1="620" y1="390" x2="640" y2="385" stroke="#3a4258" stroke-width="2" />
-      <circle cx="640" cy="385" r="5" fill="#ffcf48" opacity="0.7" filter="url(#lamp-glow)" />
-      <circle cx="640" cy="385" r="14" fill="#ffcf48" opacity="0.08" />
-    </g>
-
-    <!-- Street lamp right-center -->
-    <g>
-      <line x1="780" y1="395" x2="780" y2="510" stroke="#3a4258" stroke-width="3" />
-      <line x1="780" y1="395" x2="800" y2="390" stroke="#3a4258" stroke-width="2" />
-      <circle cx="800" cy="390" r="5" fill="#ffcf48" opacity="0.6" filter="url(#lamp-glow)" />
-      <circle cx="800" cy="390" r="14" fill="#ffcf48" opacity="0.06" />
-    </g>
-
-    <!-- Street lamp far right -->
-    <g>
-      <line x1="1100" y1="400" x2="1100" y2="510" stroke="#3a4258" stroke-width="3" />
-      <line x1="1100" y1="400" x2="1120" y2="395" stroke="#3a4258" stroke-width="2" />
-      <circle cx="1120" cy="395" r="5" fill="#ffcf48" opacity="0.55" filter="url(#lamp-glow)" />
-      <circle cx="1120" cy="395" r="14" fill="#ffcf48" opacity="0.06" />
-    </g>
-
-    <!-- Bicycle leaning against building -->
-    <g transform="translate(730, 480)">
-      <!-- back wheel -->
-      <circle cx="0" cy="20" r="10" fill="none" stroke="#3a4258" stroke-width="1.5" />
-      <!-- front wheel -->
-      <circle cx="22" cy="20" r="10" fill="none" stroke="#3a4258" stroke-width="1.5" />
-      <!-- frame -->
-      <line x1="0" y1="20" x2="8" y2="8" stroke="#3a4258" stroke-width="1.5" />
-      <line x1="8" y1="8" x2="22" y2="20" stroke="#3a4258" stroke-width="1.5" />
-      <line x1="8" y1="8" x2="18" y2="6" stroke="#3a4258" stroke-width="1.5" />
-      <line x1="18" y1="6" x2="22" y2="20" stroke="#3a4258" stroke-width="1.2" />
-      <!-- handlebars -->
-      <line x1="18" y1="6" x2="16" y2="2" stroke="#3a4258" stroke-width="1.2" />
-      <line x1="14" y1="3" x2="19" y2="1" stroke="#3a4258" stroke-width="1.2" />
-      <!-- seat -->
-      <line x1="8" y1="8" x2="8" y2="4" stroke="#3a4258" stroke-width="1.2" />
-      <line x1="5" y1="4" x2="11" y2="4" stroke="#3a4258" stroke-width="1.5" stroke-linecap="round" />
-      <!-- kickstand -->
-      <line x1="10" y1="16" x2="14" y2="30" stroke="#3a4258" stroke-width="1" />
-    </g>
-
-    <!-- Sidewalk -->
-    <rect x="0" y="505" width="1200" height="8" fill="#1e2538" />
-
-    <!-- Street surface -->
-    <rect x="0" y="513" width="1200" height="37" fill="#181e2e" />
-
-    <!-- Road markings -->
-    <line x1="0" y1="532" x2="1200" y2="532" stroke="#354060" stroke-width="1.2" stroke-dasharray="20,15" />
-
-    <!-- Crosswalk stripes -->
-    <g opacity="0.6">
-      <rect x="820" y="516" width="28" height="3" fill="#455272" />
-      <rect x="820" y="522" width="28" height="3" fill="#455272" />
-      <rect x="820" y="528" width="28" height="3" fill="#455272" />
-      <rect x="820" y="534" width="28" height="3" fill="#455272" />
-      <rect x="820" y="540" width="28" height="3" fill="#455272" />
-    </g>
-
-    <!-- Sidewalk edge -->
-    <line x1="0" y1="513" x2="1200" y2="513" stroke="#2a3348" stroke-width="2" />
-
-    <!-- Vending machine -->
-    <rect x="950" y="478" width="18" height="27" rx="1" fill="#1e2538" stroke="#354060" stroke-width="1" />
-    <rect x="953" y="481" width="5" height="6" rx="0.5" fill="#b967ff" opacity="0.7" />
-    <rect x="960" y="481" width="5" height="6" rx="0.5" fill="#ffab40" opacity="0.6" />
-    <rect x="953" y="490" width="5" height="6" rx="0.5" fill="#00e5ff" opacity="0.6" />
-    <rect x="960" y="490" width="5" height="6" rx="0.5" fill="#39ff8e" opacity="0.7" />
-    <rect x="953" y="499" width="12" height="3" rx="0.5" fill="#121622" />
-    <ellipse cx="959" cy="506" rx="12" ry="3" fill="#b967ff" opacity="0.04" />
-
-    <!-- Neon sign: 薬 (pharmacy) -->
-    <g class="sign-flicker" style="animation-delay: 2s;" filter="url(#sign-glow)">
-      <text x="1008" y="218" text-anchor="middle" fill="#39ff8e" font-size="16" font-family="sans-serif">薬</text>
-    </g>
-
-    <!-- Small horizontal sign: BAR -->
-    <g filter="url(#neon-glow)">
-      <rect x="1090" y="200" width="30" height="14" rx="1" fill="none" stroke="#ffab40" stroke-width="1" />
-      <text x="1105" y="211" text-anchor="middle" fill="#ffab40" font-size="9" font-family="'IBM Plex Mono', monospace" font-weight="600">BAR</text>
-    </g>
-
-    <!-- Telephone pole -->
-    <line x1="680" y1="165" x2="680" y2="510" stroke="#3a4258" stroke-width="3.5" />
-    <line x1="668" y1="180" x2="692" y2="180" stroke="#3a4258" stroke-width="2.5" />
-    <line x1="668" y1="198" x2="692" y2="198" stroke="#3a4258" stroke-width="2.5" />
-
-    <!-- Telephone pole 2 -->
-    <line x1="1050" y1="175" x2="1050" y2="510" stroke="#3a4258" stroke-width="3.5" />
-    <line x1="1038" y1="190" x2="1062" y2="190" stroke="#3a4258" stroke-width="2.5" />
-
-    <!-- Power lines (low, between poles) -->
-    <path d="M 680 180 Q 860 170 1050 190" fill="none" stroke="#3a4258" stroke-width="1" />
-    <path d="M 680 198 Q 620 195 560 200" fill="none" stroke="#3a4258" stroke-width="0.8" />
-    <path d="M 1050 190 Q 1120 185 1200 190" fill="none" stroke="#3a4258" stroke-width="0.8" />
-
-    <!-- Neon puddle reflections on street -->
-    <ellipse cx="640"  cy="535" rx="25" ry="4" fill="#ffcf48" opacity="0.08" />
-    <ellipse cx="760"  cy="535" rx="22" ry="4" fill="#ff2d7b" opacity="0.12" />
-    <ellipse cx="917"  cy="535" rx="25" ry="4" fill="#00e5ff" opacity="0.12" />
-    <ellipse cx="1005" cy="535" rx="28" ry="4" fill="#b967ff" opacity="0.10" />
-    <ellipse cx="1105" cy="535" rx="18" ry="3" fill="#ffab40" opacity="0.08" />
-    <ellipse cx="850"  cy="535" rx="20" ry="3" fill="#39ff8e" opacity="0.06" />
-
-    <!-- Ground fade to background -->
-    <rect x="0" y="543" width="1200" height="7" fill="url(#ground-fade)" />
-    <defs>
-      <linearGradient id="ground-fade" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#181e2e" />
-        <stop offset="100%" stop-color="#0e1220" />
-      </linearGradient>
-    </defs>
-    </g>
-  </svg>
-
-  <div class="content-layer">
-    <div class="modal-overlay" id="resume-modal">
-      <div class="modal-actions">
-        <button class="modal-btn" id="modal-download">[ download ]</button>
-        <button class="modal-btn" id="modal-close">[ close ]</button>
+    <!-- about -->
+    <li class="folder" data-group="top">
+      <div class="row">
+        <span>├── </span>
+        <span>about/</span>
       </div>
-      <div class="modal-scroll">
-        <div id="pdf-container"></div>
-      </div>
-    </div>
-
-    <p class="name">
-      <span class="prompt">&gt;</span>Arshia Pessaran
-    </p>
-
-    <ul class="tree">
-
-      <!-- about -->
-      <li class="folder" data-group="top">
+      <div class="collapsible">
         <div class="row">
-          <span class="conn">├── </span>
-          <span class="label">about/</span>
+          <span>│   └── </span>
+          <p>Biology degree from UCF and went on to go to medical school at FIU. Withdrew to pivot into tech. Finished a second degree in data science in the span of a year and working as a software engineer ever since.</p>
         </div>
-        <div class="collapsible">
-          <div class="row" style="align-items: flex-start;">
-            <span class="conn">│   └── </span>
-            <div class="about-text">
-              <p>Biology degree from UCF and went on to go to medical school at FIU. Withdrew to pivot into tech. Finished a second degree in data science in the span of a year and working as a software engineer ever since.</p>
+      </div>
+    </li>
+
+    <!-- connect -->
+    <li class="folder" data-group="top">
+      <div class="row">
+        <span>├── </span>
+        <span>connect/</span>
+      </div>
+      <div class="collapsible">
+        <ul class="subtree">
+          <li class="row">
+            <span>│   ├── </span>
+            <a href="https://github.com/ArshiaPessaran" target="_blank">github</a>
+          </li>
+          <li class="row">
+            <span>│   ├── </span>
+            <a href="https://www.linkedin.com/in/аrѕhіареѕѕаrаn" target="_blank">linkedin</a>
+          </li>
+          <li class="row">
+            <span>│   ├── </span>
+            <a href="mailto:pessaranarshia@gmail.com">email</a>
+          </li>
+          <li class="row">
+            <span>│   └── </span>
+            <a href="Resume.pdf" target="_blank">resume</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <!-- projects -->
+    <li class="folder" data-group="top" data-parent>
+      <div class="row">
+        <span>└── </span>
+        <span>projects/</span>
+      </div>
+      <div class="collapsible">
+        <ul class="subtree">
+
+          <!-- Bludly -->
+          <li class="folder" data-group="project">
+            <div class="row">
+              <span>    ├── </span>
+              <span>Bludly</span>
             </div>
-          </div>
-        </div>
-      </li>
-
-      <!-- connect -->
-      <li class="folder" data-group="top">
-        <div class="row">
-          <span class="conn">├── </span>
-          <span class="label">connect/</span>
-        </div>
-        <div class="collapsible">
-          <ul class="subtree">
-            <li class="row">
-              <span class="conn">│   ├── </span>
-              <a class="label" href="https://github.com/ArshiaPessaran" target="_blank">github</a>
-            </li>
-            <li class="row">
-              <span class="conn">│   ├── </span>
-              <a class="label" href="https://www.linkedin.com/in/аrѕhіареѕѕаrаn" target="_blank">linkedin</a>
-            </li>
-            <li class="row">
-              <span class="conn">│   ├── </span>
-              <a class="label" href="mailto:pessaranarshia@gmail.com">email</a>
-            </li>
-            <li class="row">
-              <span class="conn">│   └── </span>
-              <a class="label resume-link" href="#">resume</a>
-            </li>
-          </ul>
-        </div>
-      </li>
-
-      <!-- projects -->
-      <li class="folder" data-group="top" data-parent>
-        <div class="row">
-          <span class="conn">└── </span>
-          <span class="label">projects/</span>
-        </div>
-        <div class="collapsible">
-          <ul class="subtree">
-
-            <!-- Bludly -->
-            <li class="folder" data-group="project">
+            <div class="collapsible">
               <div class="row">
-                <span class="conn">    ├── </span>
-                <span class="label">Bludly</span>
+                <span>    │   └── </span>
+                <p>
+                  A HIPAA-compliant fullstack health data platform for uploading, tracking, and
+                  analyzing blood lab results over time. Interactive D3.js visualizations chart
+                  biomarker trends with color-coded reference ranges, date filtering, and multi-lab
+                  overlay. AI analysis runs on a self-hosted Deepseek R1 model — no patient data
+                  leaves the infrastructure — generating health grades, biological age estimates,
+                  and actionable insights.
+                  <br><br>
+                  Supports multiple user profiles for family management, secure time-limited doctor
+                  sharing via tokenized links, and data export. Authenticated with Google OAuth 2.0
+                  and deployed on AWS EC2.
+                  <br><br>
+                  React · Node.js · Express · PostgreSQL · D3.js · Google OAuth 2.0 ·
+                  Passport.js · REST API · Docker · AWS EC2 · Deepseek R1 · Vite · Tailwind CSS
+                </p>
               </div>
-              <div class="collapsible">
-                <div class="row" style="align-items: flex-start;">
-                  <span class="conn">    │   └── </span>
-                  <div class="detail-wrap">
-                    <p class="detail-text">
-                      A HIPAA-compliant fullstack health data platform for uploading, tracking, and
-                      analyzing blood lab results over time. Interactive D3.js visualizations chart
-                      biomarker trends with color-coded reference ranges, date filtering, and multi-lab
-                      overlay. AI analysis runs on a self-hosted Deepseek R1 model — no patient data
-                      leaves the infrastructure — generating health grades, biological age estimates,
-                      and actionable insights.
-                      <br><br>
-                      Supports multiple user profiles for family management, secure time-limited doctor
-                      sharing via tokenized links, and data export. Authenticated with Google OAuth 2.0
-                      and deployed on AWS EC2.
-                      <br><br>
-                      React · Node.js · Express · PostgreSQL · D3.js · Google OAuth 2.0 ·
-                      Passport.js · REST API · Docker · AWS EC2 · Deepseek R1 · Vite · Tailwind CSS
-                    </p>
-                    <div class="detail-img"></div>
-                  </div>
-                </div>
-              </div>
-            </li>
+            </div>
+          </li>
 
-            <!-- Nautiq -->
-            <li class="folder" data-group="project">
+          <!-- Nautiq -->
+          <li class="folder" data-group="project">
+            <div class="row">
+              <span>    ├── </span>
+              <span>Nautiq</span>
+            </div>
+            <div class="collapsible">
               <div class="row">
-                <span class="conn">    ├── </span>
-                <span class="label">Nautiq</span>
+                <span>    │   └── </span>
+                <p>
+                  The officially endorsed iOS and Android companion app for the Deep6 Excursion dive
+                  computer, built as a replacement for the 1-star-rated competitor. Shipped to TestFlight
+                  and pitched to the manufacturer, securing official endorsement as their companion app
+                  with full branding and firmware collaboration rights. Reverse-engineered the BLE
+                  protocol by studying libdivecomputer C sources, sniffing a separate app's Android
+                  traffic via HCI snoop logs, and mapping the full GATT service table on physical
+                  hardware using nRF Connect and LightBlue. Discovered undocumented behavior — the
+                  device uses a single bidirectional characteristic (FFE1) rather than separate TX/RX
+                  channels, and advertises short 16-bit UUIDs that don't match the 128-bit service UUID,
+                  requiring name-based scan filtering.
+                  <br><br>
+                  Implements the full TI CC2652R1 communication protocol with two firmware parser
+                  variants (V0 legacy and V1 modern), packet framing with additive-sum checksums,
+                  and fingerprint-based deduplication. Features over-the-air firmware updates via an
+                  undocumented FFE2 channel activated by a magic trigger sequence — a capability no
+                  existing app has delivered for this hardware on iOS. Firmware binaries are served
+                  from GitHub Releases with SHA-256 integrity verification and offline caching.
+                  <br><br>
+                  Extracted competitor firmware binaries from Android APK assets to enable cross-version
+                  testing. Freemium model with StoreKit 2 and Google Play Billing in-app purchase.
+                  Verified against 77 dives downloaded from a physical D01-5C device. Zero third-party
+                  dependencies on both platforms.
+                  <br><br>
+                  Swift 6 · SwiftUI · SwiftData · Kotlin · Jetpack Compose · Room ·
+                  CoreBluetooth · Android BLE · Swift Charts · MapKit · CloudKit ·
+                  StoreKit 2 · CryptoKit · BLE protocol reverse engineering · binary parsing
+                </p>
               </div>
-              <div class="collapsible">
-                <div class="row" style="align-items: flex-start;">
-                  <span class="conn">    │   └── </span>
-                  <div class="detail-wrap">
-                    <p class="detail-text">
-                      The officially endorsed iOS and Android companion app for the Deep6 Excursion dive
-                      computer, built as a replacement for the 1-star-rated competitor. Shipped to TestFlight
-                      and pitched to the manufacturer, securing official endorsement as their companion app
-                      with full branding and firmware collaboration rights. Reverse-engineered the BLE
-                      protocol by studying libdivecomputer C sources, sniffing a separate app's Android
-                      traffic via HCI snoop logs, and mapping the full GATT service table on physical
-                      hardware using nRF Connect and LightBlue. Discovered undocumented behavior — the
-                      device uses a single bidirectional characteristic (FFE1) rather than separate TX/RX
-                      channels, and advertises short 16-bit UUIDs that don't match the 128-bit service UUID,
-                      requiring name-based scan filtering.
-                      <br><br>
-                      Implements the full TI CC2652R1 communication protocol with two firmware parser
-                      variants (V0 legacy and V1 modern), packet framing with additive-sum checksums,
-                      and fingerprint-based deduplication. Features over-the-air firmware updates via an
-                      undocumented FFE2 channel activated by a magic trigger sequence — a capability no
-                      existing app has delivered for this hardware on iOS. Firmware binaries are served
-                      from GitHub Releases with SHA-256 integrity verification and offline caching.
-                      <br><br>
-                      Extracted competitor firmware binaries from Android APK assets to enable cross-version
-                      testing. Freemium model with StoreKit 2 and Google Play Billing in-app purchase.
-                      Verified against 77 dives downloaded from a physical D01-5C device. Zero third-party
-                      dependencies on both platforms.
-                      <br><br>
-                      Swift 6 · SwiftUI · SwiftData · Kotlin · Jetpack Compose · Room ·
-                      CoreBluetooth · Android BLE · Swift Charts · MapKit · CloudKit ·
-                      StoreKit 2 · CryptoKit · BLE protocol reverse engineering · binary parsing
-                    </p>
-                    <div class="detail-img"></div>
-                  </div>
-                </div>
-              </div>
-            </li>
+            </div>
+          </li>
 
-            <!-- PDF Reconstruction Pipeline -->
-            <li class="folder" data-group="project">
+          <!-- PDF Reconstruction Pipeline -->
+          <li class="folder" data-group="project">
+            <div class="row">
+              <span>    ├── </span>
+              <span>PDF Reconstruction Pipeline</span>
+            </div>
+            <div class="collapsible">
               <div class="row">
-                <span class="conn">    ├── </span>
-                <span class="label">PDF Reconstruction Pipeline</span>
+                <span>    │   └── </span>
+                <p>
+                  A multi-stage pipeline that reconstructs scanned PDFs into clean digital documents.
+                  Preprocessing corrects page skew via projection profile analysis and Otsu thresholding,
+                  denoises with a bilateral filter to preserve edges, and binarizes for stroke analysis.
+                  Pages are classified in two passes — a fast pixel statistics pass filters obvious
+                  outliers, while a full pass combines Surya's deep learning layout model with OCR
+                  confidence metrics to label each page as normal, mixed, or outlier.
+                  <br><br>
+                  A two-phase calibration system processes the first batch of pages to establish a
+                  font size and style baseline before full reconstruction. OCR is batched across pages
+                  for GPU efficiency, with support for three engines: Surya, Tesseract, and PaddleOCR.
+                  <br><br>
+                  Python · PyMuPDF · ReportLab · OpenCV · Surya · PaddleOCR · Tesseract ·
+                  deep learning · OCR · computer vision · image processing · pipeline architecture · customtkinter
+                </p>
               </div>
-              <div class="collapsible">
-                <div class="row" style="align-items: flex-start;">
-                  <span class="conn">    │   └── </span>
-                  <div class="detail-wrap">
-                    <p class="detail-text">
-                      A multi-stage pipeline that reconstructs scanned PDFs into clean digital documents.
-                      Preprocessing corrects page skew via projection profile analysis and Otsu thresholding,
-                      denoises with a bilateral filter to preserve edges, and binarizes for stroke analysis.
-                      Pages are classified in two passes — a fast pixel statistics pass filters obvious
-                      outliers, while a full pass combines Surya's deep learning layout model with OCR
-                      confidence metrics to label each page as normal, mixed, or outlier.
-                      <br><br>
-                      A two-phase calibration system processes the first batch of pages to establish a
-                      font size and style baseline before full reconstruction. OCR is batched across pages
-                      for GPU efficiency, with support for three engines: Surya, Tesseract, and PaddleOCR.
-                      <br><br>
-                      Python · PyMuPDF · ReportLab · OpenCV · Surya · PaddleOCR · Tesseract ·
-                      deep learning · OCR · computer vision · image processing · pipeline architecture · customtkinter
-                    </p>
-                    <div class="detail-img"></div>
-                  </div>
-                </div>
-              </div>
-            </li>
+            </div>
+          </li>
 
-            <!-- TradingView Heatmap Bot -->
-            <li class="folder" data-group="project">
+          <!-- TradingView Heatmap Bot -->
+          <li class="folder" data-group="project">
+            <div class="row">
+              <span>    └── </span>
+              <span>TradingView Heatmap Bot</span>
+            </div>
+            <div class="collapsible">
               <div class="row">
-                <span class="conn">    └── </span>
-                <span class="label">TradingView Heatmap Bot</span>
+                <span>        └── </span>
+                <p>
+                  A Windows background application that automates hourly capture of the TradingView
+                  S&amp;P 500 heatmap and delivers it to a Discord channel. Uses Playwright to
+                  launch a headless Chromium browser, navigate to TradingView, configure the heatmap
+                  view, and capture a screenshot — all without user interaction. A time-aligned
+                  scheduler fires on the hour, and the captured image is posted via Discord's
+                  incoming webhook REST API.
+                  <br><br>
+                  Packaged as a standalone Windows executable with PyInstaller. Runs as a persistent
+                  system tray process with pause, resume, and manual trigger controls.
+                  <br><br>
+                  Python · Playwright · headless browser automation · Discord API ·
+                  webhook integration · task scheduling · PyInstaller · Windows system tray
+                </p>
               </div>
-              <div class="collapsible">
-                <div class="row" style="align-items: flex-start;">
-                  <span class="conn">        └── </span>
-                  <div class="detail-wrap">
-                    <p class="detail-text">
-                      A Windows background application that automates hourly capture of the TradingView
-                      S&amp;P 500 heatmap and delivers it to a Discord channel. Uses Playwright to
-                      launch a headless Chromium browser, navigate to TradingView, configure the heatmap
-                      view, and capture a screenshot — all without user interaction. A time-aligned
-                      scheduler fires on the hour, and the captured image is posted via Discord's
-                      incoming webhook REST API.
-                      <br><br>
-                      Packaged as a standalone Windows executable with PyInstaller. Runs as a persistent
-                      system tray process with pause, resume, and manual trigger controls.
-                      <br><br>
-                      Python · Playwright · headless browser automation · Discord API ·
-                      webhook integration · task scheduling · PyInstaller · Windows system tray
-                    </p>
-                    <div class="detail-img"></div>
-                  </div>
-                </div>
-              </div>
-            </li>
+            </div>
+          </li>
 
-          </ul>
-        </div>
-      </li>
+        </ul>
+      </div>
+    </li>
 
-    </ul>
-  </div>
+  </ul>
 
   <script>
     function openEl(el) {
@@ -966,93 +246,11 @@
       }
     }
 
-    // ── Resume modal ──────────────────────────────────────────────
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-    const modal        = document.getElementById('resume-modal');
-    const pdfContainer = document.getElementById('pdf-container');
-    let pdfRendered    = false;
-
-    async function renderPDF() {
-      if (pdfRendered) return;
-      const pdf  = await pdfjsLib.getDocument('Resume.pdf').promise;
-      const dpr  = window.devicePixelRatio || 1;
-      const availH = window.innerHeight - 120;
-
-      for (let i = 1; i <= pdf.numPages; i++) {
-        const page     = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale: 1 });
-        // scale to fit viewport height
-        const fitScale = availH / viewport.height;
-        const scale    = fitScale * dpr;
-        const scaled   = page.getViewport({ scale });
-
-        const canvas  = document.createElement('canvas');
-        canvas.width  = scaled.width;
-        canvas.height = scaled.height;
-        canvas.style.maxHeight = 'calc(100vh - 120px)';
-        canvas.style.maxHeight = 'calc(100dvh - 120px)';
-        canvas.style.width = 'auto';
-        pdfContainer.appendChild(canvas);
-
-        await page.render({ canvasContext: canvas.getContext('2d'), viewport: scaled }).promise;
-      }
-      pdfRendered = true;
-    }
-
-    function openModal() {
-      modal.classList.add('visible');
-      document.body.style.overflow = 'hidden';
-      renderPDF();
-    }
-
-    function closeModal() {
-      modal.classList.remove('visible');
-      document.body.style.overflow = '';
-    }
-
-    document.querySelectorAll('.resume-link').forEach(el =>
-      el.addEventListener('click', e => { e.preventDefault(); openModal(); })
-    );
-
-    document.getElementById('modal-download').addEventListener('click', async () => {
-      const res  = await fetch('Resume.pdf');
-      const blob = await res.blob();
-      const url  = URL.createObjectURL(blob);
-      const a    = document.createElement('a');
-      a.href     = url;
-      a.download = 'Arshia_Pessaran_Resume.pdf';
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    document.getElementById('modal-close').addEventListener('click', closeModal);
-    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
     document.querySelectorAll('.folder[data-group]').forEach(folder => {
       folder.querySelector(':scope > .row')
         .addEventListener('click', () => toggleFolder(folder));
-    });
-
-    // Randomize animation durations ±1s each cycle
-    const animatedSelectors = [
-      { sel: '.sign-flicker',  base: 4  },
-      { sel: '.sign-flicker2', base: 6  },
-      { sel: '.star-twinkle',  base: 3  },
-      { sel: '.petal',         base: 20 },
-      { sel: '.petal2',        base: 25 },
-    ];
-    animatedSelectors.forEach(({ sel, base }) => {
-      document.querySelectorAll(sel).forEach(el => {
-        el.addEventListener('animationiteration', () => {
-          el.style.animationDuration = (base + (Math.random() * 2 - 1)).toFixed(2) + 's';
-        });
-      });
     });
   </script>
 
 </body>
 </html>
-
