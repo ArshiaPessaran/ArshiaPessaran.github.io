@@ -186,18 +186,6 @@
       opacity: 0.95;
     }
 
-    /* ── Street strip (spans full page width) ──────────────────── */
-    .street {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100vw;
-      height: 12px;
-      background: linear-gradient(to bottom, #181e2e 0%, #0e1220 100%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
     .content-layer {
       position: relative;
       z-index: 1;
@@ -708,11 +696,16 @@
     <ellipse cx="1105" cy="535" rx="18" ry="3" fill="#ffab40" opacity="0.08" />
     <ellipse cx="850"  cy="535" rx="20" ry="3" fill="#39ff8e" opacity="0.06" />
 
+    <!-- Ground fade to background -->
+    <rect x="0" y="543" width="1200" height="7" fill="url(#ground-fade)" />
+    <defs>
+      <linearGradient id="ground-fade" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#181e2e" />
+        <stop offset="100%" stop-color="#0e1220" />
+      </linearGradient>
+    </defs>
     </g>
   </svg>
-
-  <!-- Full-width street strip (separated from cityscape so it spans the page) -->
-  <div class="street"></div>
 
   <div class="content-layer">
     <div class="modal-overlay" id="resume-modal">
