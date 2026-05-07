@@ -168,6 +168,23 @@
       flex-shrink: 0;
     }
 
+    .app-icon-link {
+      display: block;
+      flex-shrink: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .app-icon-link:hover { opacity: 0.75; }
+
+    .app-icon {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      background: none;
+      opacity: 1;
+      filter: invert(1) brightness(0.92);
+    }
+
     /* dim connectors when folder is closed */
     .folder:not(.open) > .row .conn {
       opacity: 0.4;
@@ -184,6 +201,18 @@
       pointer-events: none;
       z-index: 0;
       opacity: 0.95;
+    }
+
+    /* ── Street band (spans full page width, behind cityscape) ── */
+    .street {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 1.5vw;
+      background: linear-gradient(to bottom, transparent 0%, #181e2e 60%, #0e1220 100%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .content-layer {
@@ -357,6 +386,9 @@
   </style>
 </head>
 <body>
+
+  <!-- Full-width street band (behind cityscape so puddles & ground-fade render on top) -->
+  <div class="street"></div>
 
   <!-- Tokyo cityscape background -->
   <svg class="cityscape" viewBox="0 0 1200 550" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
@@ -846,7 +878,11 @@
                       CoreBluetooth · Android BLE · Swift Charts · MapKit · CloudKit ·
                       StoreKit 2 · CryptoKit · BLE protocol reverse engineering · binary parsing
                     </p>
-                    <div class="detail-img"></div>
+                    <a href="https://apps.apple.com/us/app/nautiq-deep6/id6762072202"
+                       target="_blank" rel="noopener" class="app-icon-link"
+                       aria-label="Download Nautiq on the App Store">
+                      <img src="Deep6.svg" alt="Nautiq app icon" class="detail-img app-icon" />
+                    </a>
                   </div>
                 </div>
               </div>
