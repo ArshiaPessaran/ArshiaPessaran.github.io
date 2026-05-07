@@ -177,8 +177,9 @@
     .cityscape {
       position: fixed;
       bottom: 0;
-      left: 0;
-      width: 100vw;
+      right: 0;
+      left: auto;
+      width: 95vw;
       height: auto;
       pointer-events: none;
       z-index: 0;
@@ -283,7 +284,7 @@
       .detail-wrap { flex-direction: column; }
       .detail-img  { width: 100%; height: 56px; }
       .modal-scroll { height: 82vh; }
-      .cityscape { width: 100vw; opacity: 0.45; }
+      .cityscape { width: 100vw; left: 0; right: auto; opacity: 0.45; }
     }
 
     /* ── Resume modal ───────────────────────────────────────────── */
